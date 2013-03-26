@@ -130,6 +130,8 @@ INSTALLED_APPS = (
 
     'django_nose',
     'example_project.test_app',
+
+    'tx_elevators',
 )
 
 # A sample logging configuration. The only tangible logging
