@@ -1,0 +1,28 @@
+<h1>Elevators</h1>
+
+<section>
+  <h2>Tallest Buildings</h2>
+  <ol>
+    {% for building in tallest_buildings %}
+      <li>{{ building }} &ndash; {{ building.height }} floors</li>
+    {% endfor %}
+  </ol>
+</section>
+
+<section>
+  <h2>Oldest Elevators</h2>
+  <ol>
+    {% for elevator in oldest_elevators %}
+      <li>{{ elevator }} ({{ elevator.year_installed }})</li>
+    {% endfor %}
+  </ol>
+</section>
+
+<section>
+  <h2>Buildings with the Most Elevators</h2>
+  <ol>
+    {% for building in densest_buildings %}
+      <li>{{ building }} &ndash; {{ building.num_elevators }} elevators</li>
+    {% endfor %}
+  </ol>
+</section>

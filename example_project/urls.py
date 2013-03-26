@@ -6,9 +6,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'example_project.views.home', name='home'),
-    # url(r'^example_project/', include('example_project.foo.urls')),
+    url(r'^', include('tx_elevators.urls',
+        namespace='tx_elevators', app_name='tx_elevators')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
