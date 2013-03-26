@@ -23,8 +23,11 @@ class Building(models.Model):
     # BZIP
     zip_code = models.CharField(max_length=5)
     # BCOUNTY
+    county = models.CharField(max_length=20)
     # ONAME1
+    owner = models.CharField(max_length=100)
     # CNAME1
+    contact = models.CharField(max_length=100)
 
     def __unicode__(self):
         return u"{0.name_1} {0.city}".format(self)
@@ -50,7 +53,7 @@ class Elevator(models.Model):
     # DT_CRT_INS
     last_inspection = models.DateField(
         u'Date of Last Certified Inspection',
-        null=True,  # sometimes this is empty for some reason
+        null=True,
     )
     # DT_EXPIRY
     next_inspection = models.DateField(
@@ -59,6 +62,7 @@ class Elevator(models.Model):
     # ELV_5YEAR
     last_5year = models.DateField(
         u'Date of Last 5 Year Test',
+        null=True,
     )
     # EQUIPMENT_TYPE
     equipment_type = models.CharField(

@@ -23,6 +23,13 @@ def process_row(row):
     default_data = dict(
         name_1=row['BNAME1'],
         name_2=row['BNAME2'],
+        address_1=row['BADDR1'],
+        address_2=row['BADDR2'],
+        city=row['BCITY'],
+        zip_code=row['BZIP'],
+        county=row['BCOUNTY'],
+        owner=row['ONAME1'],
+        contact=row['CNAME1'],
     )
     building, created = Building.objects.get_or_create(
         elbi=row['LICNO'],
