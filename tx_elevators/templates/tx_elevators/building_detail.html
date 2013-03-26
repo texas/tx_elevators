@@ -1,0 +1,30 @@
+<h1>{{ object }}</h1>
+<dl>
+  <dt>Building Number</dt>
+  <dd>{{ object.elbi }}</dd>
+  <dt>Name</dt>
+  <dd>
+    {{ object.name_1 }}
+    {{ object.name_2 }}
+  </dd>
+  <dt>Address</dt>
+  <dd>
+    {{ object.address_1 }}
+    {{ object.address_2 }}
+    {{ object.city }}, {{ object.zip_code }}
+  </dd>
+</dl>
+
+<h2>Elevators</h2>
+<ul>
+  {% for elevator in object.elevator_set.all %}
+    <li>
+      Equipment Identification Number: {{ elevator.decal }}
+      Date of Last Certified Inspection: {{ elevator.last_inspection }}
+      {{ elevator.equipment_type }}
+      {{ elevator.drive_type }}
+      {{ elevator.floors }} floors
+      ({{ elevator.year_installed }})
+    </li>
+  {% endfor %}
+</ul>

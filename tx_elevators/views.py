@@ -1,6 +1,6 @@
 """Sample Views"""
 from django.db.models import Count, Max
-from django.views.generic import TemplateView
+from django.views.generic import DetailView, TemplateView
 
 from .models import Building, Elevator
 
@@ -22,3 +22,9 @@ class Landing(TemplateView):
             num_elevators=Count('elevator')).order_by('-num_elevators')
         context['densest_buildings'] = densest_buildings[:15]
         return context
+
+
+class BuildingView(DetailView):
+    model = Building
+    slug_field = 'elbi'
+    slug_url_kwarg = 'elbi'

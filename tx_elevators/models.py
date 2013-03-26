@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.db import models
 
 
@@ -27,6 +28,10 @@ class Building(models.Model):
 
     def __unicode__(self):
         return u"{0.name_1} {0.city}".format(self)
+
+    def get_absolute_url(self):
+        return reverse('tx_elevators:building_detail',
+            kwargs={'elbi': self.elbi})
 
 
 class Elevator(models.Model):
