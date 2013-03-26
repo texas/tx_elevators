@@ -3,6 +3,9 @@
 media
 
 
+# Data files
+data/*.csv
+
 # Environment variables
 .env
 
