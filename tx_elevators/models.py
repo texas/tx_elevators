@@ -45,6 +45,7 @@ class Elevator(models.Model):
     # DT_CRT_INS
     last_inspection = models.DateField(
         u'Date of Last Certified Inspection',
+        null=True,  # sometimes this is empty for some reason
     )
     # DT_EXPIRY
     next_inspection = models.DateField(
