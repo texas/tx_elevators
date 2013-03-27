@@ -65,12 +65,36 @@ class Elevator(models.Model):
         null=True,
     )
     # EQUIPMENT_TYPE
+    # choices:
+    # [u'ESCALATOR',
+    #  u'NEW EQUIPMENT',
+    #  u'STAIR CLIMBER',
+    #  u'ELECTRIC ELEVATOR',
+    #  u'LIMITED USE LIMITED ACCESS',
+    #  u'FREIGHT',
+    #  u'WHEELCHAIR LIFT',
+    #  u'UNKNOWN',
+    #  u'HYDRAULIC ELEVATOR',
+    #  u'OTHER',
+    #  u'PASSENGER',
+    #  u'MOVING SIDEWALK']
     equipment_type = models.CharField(
         u'Equipment Type',
         # TODO choices
         max_length=26,
     )
     # DRIVE_TYPE
+    # choices:
+    # [u'ELEVATOR DRIVE TYPE',
+    #  u'CHAIN',
+    #  u'ELECTRIC',
+    #  u'UNKNOWN',
+    #  u'ROPED SPROCKET',
+    #  u'ROPED HYDRAULIC',
+    #  u'SCREW',
+    #  u'HYDRAULIC',
+    #  u'RACK & PINION',
+    #  u'WINDING DRUM']
     drive_type = models.CharField(
         u'Machine Drive Type',
         # TODO choices
