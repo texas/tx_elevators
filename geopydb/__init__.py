@@ -22,13 +22,21 @@ class GoogleV3(object):
         key = address
         value = self.store.get(key, None)
         if value is None:
-            value_raw = self.geocoder.geocode(address)
-            value = json.dumps(value_raw)
-            self.store[key] = value
-            print "value retrieved from service"
-            return value_raw
+            try:
+                value_raw = self.geocoder.geocode(address)
+                value = json.dumps(value_raw)
+                self.store[key] = value
+                print "value retrieved from service"
+                return value_raw
+            except ValueError as e:
+                value = str(e)
+                self.store[key] = value
+                raise e
         print "value retrieved from db"
-        value_raw = json.loads(value)
+        try:
+            value_raw = json.loads(value)
+        except ValueError:
+            raise ValueError(value)
         return value_raw
 
 
