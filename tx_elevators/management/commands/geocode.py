@@ -1,3 +1,5 @@
+from __future__ import division
+
 from django.core.management.base import NoArgsCommand
 
 
@@ -17,7 +19,7 @@ class Command(NoArgsCommand):
                 print "%6d/%d %d-%s" % (i, count, building.pk, building)
             try:
                 building.geocode()
-                time.sleep(5)
+                time.sleep(86400 / 2500)  # 2500 geolocation requests/day limit
             except KeyboardInterrupt:
                 exit(1)
             except ValueError:
