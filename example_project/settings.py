@@ -10,7 +10,7 @@ def project_dir(*paths):
 
 
 # default to DEBUG=True
-DEBUG = os.environ.get('ENVIRONMENT', 'DEV') == 'DEV'
+DEBUG = os.environ.get('ENVIRONMENT', 'dev') == 'dev'
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
