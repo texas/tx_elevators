@@ -28,7 +28,7 @@ class GoogleV3(object):
                 self.store[key] = value
                 print "value retrieved from service"
                 return value_raw
-            except ValueError as e:
+            except (ValueError, geocoders.base.GeocoderResultError) as e:
                 value = str(e)
                 self.store[key] = value
                 raise e
