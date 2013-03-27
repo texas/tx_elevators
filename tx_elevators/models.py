@@ -51,8 +51,8 @@ class Building(models.Model):
             lookup_bits.append(self.zip_code)
         if not lookup_bits:
             return
-        import geopydb
-        g = geopydb.GoogleV3()
+        from geopydb import geocoders
+        g = geocoders.GoogleV3()
         lookup = ','.join(map(str, lookup_bits))
         __, (lat, lng) = g.geocode(lookup)
         self.latitude = lat
