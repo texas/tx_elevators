@@ -32,7 +32,7 @@ class Command(BaseCommand):
         if count is not None:
             qs = qs[:int(count)]
         count = qs.count()
-        for i, building in enumerate(qs):
+        for i, building in enumerate(qs, start=1):
             if verbosity:
                 print "%6d/%d %d-%s" % (i, count, building.pk, building)
             try:
