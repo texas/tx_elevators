@@ -8,11 +8,14 @@ class Command(NoArgsCommand):
 
     def handle_noargs(self, *args, **options):
         import time
+        from django.db.models import Sum
         from tx_elevators.models import Building
 
         verbosity = int(options['verbosity'])  # default: 1
 
-        qs = Building.objects.filter(latitude__isnull=True)
+        qs = Building.objects.filter(latitude__isnull=True).\
+            annotate(sum_floors=Sum('elevator__floors')).\
+            order_by('-sum_floors')
         count = qs.count()
         for i, building in enumerate(qs):
             if verbosity:
