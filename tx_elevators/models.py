@@ -33,7 +33,7 @@ class Building(models.Model):
     longitude = models.FloatField(null=True)
 
     def __unicode__(self):
-        return u"{0.name_1} {0.city}".format(self)
+        return u"{0.name_1} in {0.city}".format(self)
 
     def get_absolute_url(self):
         return reverse('tx_elevators:building_detail',
