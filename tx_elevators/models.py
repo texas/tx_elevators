@@ -29,12 +29,35 @@ class Building(models.Model):
     # CNAME1
     contact = models.CharField(max_length=100)
 
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)
+
     def __unicode__(self):
         return u"{0.name_1} {0.city}".format(self)
 
     def get_absolute_url(self):
         return reverse('tx_elevators:building_detail',
             kwargs={'elbi': self.elbi})
+
+    def geocode(self):
+        lookup_bits = []
+        if self.name_1:
+            lookup_bits.append(self.address_1)
+        if self.address_1:
+            lookup_bits.append(self.address_1)
+        if self.city:
+            lookup_bits.append(self.city)
+        if self.zip_code:
+            lookup_bits.append(self.zip_code)
+        if not lookup_bits:
+            return
+        import geopydb
+        g = geopydb.GoogleV3()
+        lookup = ','.join(map(str, lookup_bits))
+        __, (lat, lng) = g.geocode(lookup)
+        self.latitude = lat
+        self.longitude = lng
+        self.save()
 
 
 class Elevator(models.Model):
