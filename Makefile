@@ -19,4 +19,9 @@ resetdb:
 	python $(PROJECT)/manage.py syncdb --noinput
 
 
-.PHONY: help test resetdb
+scrape:
+	cd data && $(MAKE) $(MFLAGS)
+	python tx_elevators/scrapers.py data/elevator_data_file.csv
+
+
+.PHONY: help test resetdb scrape
