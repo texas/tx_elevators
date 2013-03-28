@@ -32,3 +32,48 @@
     {% endfor %}
   </ol>
 </section>
+
+<div id="chart"></div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.0.8/d3.min.js"></script>
+<script>
+  var data;
+
+  function plot(data){
+    var width = 800,
+        height = 600;
+
+    var x = d3.scale.linear().range([0, width]),
+        y = d3.scale.linear().range([height, 0]);
+
+    var svg = d3.select('#chart').append('svg')
+          .attr('width', width)
+          .attr('height', height);
+    console.log(svg)
+
+    var xAttrName = 'year_installed',
+        yAttrName = 'floors',
+        xAccessor = function(d){ return d[xAttrName]; },
+        yAccessor = function(d){ return d[yAttrName]; },
+        xCoord = function(d){ return x(d[xAttrName]); },
+        yCoord = function(d){ return y(d[yAttrName]); };
+
+    // x.domain(d3.extent(data, xAccessor));
+    // y.domain(d3.extent(data, yAccessor));
+    x.domain([1913, 2013]);
+    y.domain([0, 80]);
+
+    svg.selectAll('.dot').data(data)
+      .enter().append('circle')
+        .attr('class', 'dot')
+        .attr('r', 2)
+        .attr('cx', xCoord)
+        .attr('cy', yCoord)
+  }
+
+  $.getJSON('/api/v1/elevators/', function(response){
+    data = response;
+    console.log(data.length);
+    plot(data);
+  });
+</script>
