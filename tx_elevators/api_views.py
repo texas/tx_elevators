@@ -8,7 +8,17 @@ from .models import Elevator
 
 class ElevatorList(View):
     def get(self, request, **kwargs):
-        queryset = Elevator.objects.filter(floors__gt=0).select_related('building')
+        queryset = Elevator.objects.filter(
+            floors__gt=0, year_installed__lte=2013).select_related('building')
+        queryset = queryset.exclude(equipment_type__in=[
+            'ESCALATOR',
+            'MOVING SIDEWALK',
+            'WHEELCHAIR LIFT',
+            'STAIR CLIMBER',
+            'LIMITED USE LIMITED ACCESS',
+            'OTHER',
+            'UNKNOWN',
+        ])
         context = list(queryset.values(
             'decal',
             'floors',
