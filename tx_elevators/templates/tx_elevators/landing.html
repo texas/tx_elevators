@@ -33,23 +33,43 @@
   </ol>
 </section>
 
+<style>
+  #chart {
+    font: 10px sans-serif;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .dot {
+    stroke: #000;
+  }
+</style>
 <div id="chart"></div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.0.8/d3.min.js"></script>
 <script>
   var data;
 
-  function plot(data){
-    var width = 800,
-        height = 600;
+  function chart(data){
+    var margin = {top: 20, right: 20, bottom: 30, left: 40},
+        width = 800 - margin.left - margin.right,
+        height = 600 - margin.top - margin.bottom;
 
     var x = d3.scale.linear().range([0, width]),
         y = d3.scale.linear().range([height, 0]);
 
     var svg = d3.select('#chart').append('svg')
-          .attr('width', width)
-          .attr('height', height);
-    console.log(svg)
+          .attr('width', 800)
+          .attr('height', 600)
+
+    var plot = svg.append('g')
+          .attr('class', 'plot')
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     var xAttrName = 'year_installed',
         yAttrName = 'floors',
@@ -63,17 +83,49 @@
     x.domain([1913, 2013]);
     y.domain([0, 80]);
 
-    svg.selectAll('.dot').data(data)
+    plot.selectAll('.dot').data(data)
       .enter().append('circle')
         .attr('class', 'dot')
         .attr('r', 2)
         .attr('cx', xCoord)
         .attr('cy', yCoord)
+
+    var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom")
+          .tickFormat(function(d){ return d; }),
+        yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left");
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(" + margin.left + "," + (margin.top + height) + ")")
+        .call(xAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("x", width>>1)
+        .attr("y", 26)
+        .style("text-anchor", "end")
+        .text("year");
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .call(yAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("floors")
+
   }
 
   $.getJSON('/api/v1/elevators/', function(response){
     data = response;
     console.log(data.length);
-    plot(data);
+    chart(data);
   });
 </script>
