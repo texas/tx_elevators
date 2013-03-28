@@ -55,7 +55,37 @@
 <script>
   var data;
 
+  function stackData(data){
+    var newData = [],
+        lookup = {};
+
+    // uhhh I'm sure d3 has this built in somewhere. I don't know where though.
+    // this is sort of like layouts.stack
+    var key, counter;
+    for (var i = 0; i < data.length; i++){
+      key = data[i].year_installed + ':' + data[i].floors;
+      if (!lookup[key]) {
+        lookup[key] = 0;
+      }
+      lookup[key]++;
+    }
+    var bits;
+    for (var key in lookup){
+      // TODO is own property
+      bits = key.split(':');
+      newData.push({
+        year_installed: parseInt(bits[0], 10),
+        floors: parseInt(bits[1], 10),
+        value: lookup[key]
+      })
+    }
+    return newData;
+  }
+
   function chart(data){
+
+    data = stackData(data);
+
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
         width = 800 - margin.left - margin.right,
         height = 600 - margin.top - margin.bottom;
@@ -71,10 +101,11 @@
           .attr('class', 'plot')
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-    var xAttrName = 'year_installed',
+    xAttrName = 'year_installed',
         yAttrName = 'floors',
         xAccessor = function(d){ return d[xAttrName]; },
         yAccessor = function(d){ return d[yAttrName]; },
+        vAccessor = function(d){ return d.value; },
         xCoord = function(d){ return x(d[xAttrName]); },
         yCoord = function(d){ return y(d[yAttrName]); };
 
@@ -83,12 +114,20 @@
     x.domain([1913, 2013]);
     y.domain([0, 80]);
 
+
+    var color = d3.scale.log()
+          .range(['#aad', '#556'])
+          .domain(d3.extent(data, vAccessor));
+    window.zz = color;
+
     plot.selectAll('.dot').data(data)
       .enter().append('circle')
         .attr('class', 'dot')
-        .attr('r', 2)
+        .attr('r', 4)
         .attr('cx', xCoord)
         .attr('cy', yCoord)
+        .attr('stroke-width', 0)
+        .style('fill', function(d){ return color(d.value); })
 
     var xAxis = d3.svg.axis()
           .scale(x)
