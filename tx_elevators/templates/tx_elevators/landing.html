@@ -1,5 +1,10 @@
-<h1>Elevators</h1>
+{% extends "tx_elevators/layouts/base.html" %}
 
+{% block head_title %}Elevators{% endblock %}
+{% block page_title %}Elevators{% endblock %}
+
+
+{% block main %}
 <section>
   <h2>Tallest Buildings</h2>
   <ol>
@@ -36,3 +41,4 @@
 </section>
 
 <iframe class="chart" src="/chart/elevatorlist/" frameborder="0" scrolling=no width=840 height=600></iframe>
+{% endblock %}

@@ -1,4 +1,10 @@
-<h1>{{ object }}</h1>
+{% extends "tx_elevators/layouts/base.html" %}
+
+{% block head_title %}{{ object }}{% endblock %}
+{% block page_title %}{{ object }}{% endblock %}
+
+
+{% block main %}
 <dl>
   <dt>Building Number</dt>
   <dd>{{ object.elbi }}</dd>
@@ -28,3 +34,4 @@
     </li>
   {% endfor %}
 </ul>
+{% endblock %}
