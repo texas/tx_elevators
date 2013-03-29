@@ -19,6 +19,14 @@
     {{ object.address_2 }}
     {{ object.city }}, {{ object.zip_code }}
   </dd>
+  <dt>Owner</dt>
+  <dd>{{ object.owner }}</dd>
+  <dt>Contact</dt>
+  <dd>{{ object.contact }}</dd>
+  {% if object.latitude %}
+    <dt>Location</dt>
+    <dd>{{ object.latitude }}, {{ object.longitude }}</dd>
+  {% endif %}
 </dl>
 
 <h2>Elevators</h2>
