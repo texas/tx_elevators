@@ -64,7 +64,7 @@
 
 
   var closestBuildings = function(lat, lng){
-    var metric = distance.pythagorean;
+    var metric = distance.spherical;
     // go ahead and sort in place.
     store.sort(function(a, b){
       // TODO make a lookup table?
