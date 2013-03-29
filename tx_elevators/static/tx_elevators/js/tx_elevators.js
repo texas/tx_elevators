@@ -79,10 +79,23 @@
     $('body').addClass('no-geolocation');
   }
 
+  // Get the url for a building based on server-side url pattern
+  var buildingToUrl = function(building){
+    return '/building/' + building.elbi + '/';
+  };
+
   var gotPosition = function(position){
     var lat = position.coords.latitude,
         lng = position.coords.longitude;
-    console.log(lat, lng, closestBuildings(lat, lng));
+    var $container = $('#nearest').empty();
+    $.each(closestBuildings(lat, lng), function(idx, building){
+      $container.append('<li>' +
+        '<a href="' + buildingToUrl(building) + '">' + building.name_1 + '</a>, ' +
+        building.address_1 + ', ' +
+        building.city +
+        '</li>');
+
+    });
   };
 
   $('#locate').one('click', function(){
@@ -90,9 +103,10 @@
   });
 
 
-  exports.searchZip = searchZip;
-  exports.d = distance;
-  exports.c = closestBuildings;
+  // exports
+  // exports.searchZip = searchZip;
+  // exports.d = distance;
+  // exports.c = closestBuildings;
 
 })(window, window.jQuery);
 // "76104"

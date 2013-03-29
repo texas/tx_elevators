@@ -52,6 +52,7 @@ class Locator(BaseChart):
         context = list(queryset.values(
             'elbi',
             'name_1',
+            'address_1',
             'city',
             'zip_code',
             'latitude',
