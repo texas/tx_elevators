@@ -18,6 +18,8 @@ chartpatterns = patterns('',
     url(r'^elevatorlist/$', chart_views.ElevatorList.as_view()),
     url(r'^elevatorlist/data/$', gzip_page(chart_views.ElevatorList.as_view()),
         {'data': True}),
+    url(r'^locator/data/$', gzip_page(chart_views.Locator.as_view()),
+        {'data': True}),
 )
 
 urlpatterns += patterns('',

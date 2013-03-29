@@ -3,7 +3,7 @@ import json
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 
-from .models import Elevator
+from .models import Building, Elevator
 
 
 class BaseChart(TemplateView):
@@ -40,5 +40,21 @@ class ElevatorList(BaseChart):
             'building__elbi',
             'building__latitude',
             'building__longitude',
+        ))
+        return context
+
+
+class Locator(BaseChart):
+    template_name = "TODO"  # TODO
+
+    def get_data(self, request, **kwargs):
+        queryset = Building.objects.exclude(latitude=None)
+        context = list(queryset.values(
+            'elbi',
+            'name_1',
+            'city',
+            'zip_code',
+            'latitude',
+            'longitude',
         ))
         return context
