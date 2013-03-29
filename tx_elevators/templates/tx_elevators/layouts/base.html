@@ -5,6 +5,11 @@
     <title>{% block head_title %}{% endblock %}</title>
   </head>
   <body>
+    {% block nav %}
+      <div>
+        <button id=locate type=button>Locate Nearest Elevators</button>
+      </div>
+    {% endblock %}
     {% block main_container %}
       <div class="main" role="main">
         <h1>{% block page_title %}{% endblock %}</h1>

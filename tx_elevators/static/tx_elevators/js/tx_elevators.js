@@ -1,4 +1,4 @@
-/*global console */
+/*global navigator, console */
 (function(exports, $){
   "use strict";
 
@@ -41,37 +41,58 @@
       var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
         Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
       var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      return this.R * c;
+      return distance.R * c;
     },
     spherical: function(lat1, lng1, lat2, lng2){
       return Math.acos(Math.sin(lat1)*Math.sin(lat2) +
         Math.cos(lat1) * Math.cos(lat2) *
-        Math.cos(lng2 - lng1)) * this.R;
+        Math.cos(lng2 - lng1)) * distance.R;
     },
     pythagorean: function(lat1, lng1, lat2, lng2){
+      lat1 = lat1.toRad();
+      lng1 = lng1.toRad();
+      lat2 = lat2.toRad();
+      lng2 = lng2.toRad();
       var x = (lng2 - lng1) * Math.cos((lat1 + lat2) / 2),
           y = lat2 - lat1;
-      return Math.sqrt(x * x + y * y) * this.R;
+      return Math.sqrt(x * x + y * y) * distance.R;
     },
     magic: function(lat1, lng1, lat2, lng2){
-      return (Math.abs(lat1 - lat2) + Math.abs(lng1 - lng2)) * this.R;
+      return (Math.abs(lat1 - lat2) + Math.abs(lng1 - lng2)) * distance.R;
     }
   };
 
 
-  var closest = function(lat, lng){
-    var metric = distance.spherical;
+  var closestBuildings = function(lat, lng){
+    var metric = distance.pythagorean;
     // go ahead and sort in place.
     store.sort(function(a, b){
       // TODO make a lookup table?
-      return metric(lat, lng, b.latitude, b.longitude) - metric(lat, lng, a.latitude, a.longitude);
+      return metric(lat, lng, a.latitude, a.longitude) - metric(lat, lng, b.latitude, b.longitude);
     });
     return store.slice(0, 10);
   };
 
+
+  // hook up UI
+  if (!navigator.geolocation){
+    $('body').addClass('no-geolocation');
+  }
+
+  var gotPosition = function(position){
+    var lat = position.coords.latitude,
+        lng = position.coords.longitude;
+    console.log(lat, lng, closestBuildings(lat, lng));
+  };
+
+  $('#locate').one('click', function(){
+    navigator.geolocation.getCurrentPosition(gotPosition);
+  });
+
+
   exports.searchZip = searchZip;
   exports.d = distance;
-  exports.c = closest;
+  exports.c = closestBuildings;
 
 })(window, window.jQuery);
 // "76104"
