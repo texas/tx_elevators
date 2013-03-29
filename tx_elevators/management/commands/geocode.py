@@ -22,6 +22,7 @@ class Command(BaseCommand):
         import time
         from django.db.models import Sum
         from tx_elevators.models import Building
+        from geopy.geocoders.googlev3 import GQueryError
 
         verbosity = int(options['verbosity'])  # default: 1
         count = options['count']
@@ -40,5 +41,7 @@ class Command(BaseCommand):
                 time.sleep(wait)
             except KeyboardInterrupt:
                 exit(1)
-            except ValueError:
+            except (ValueError, GQueryError):
+                # ignore bad address ValueError
+                # ignore no address GQueryError
                 pass
