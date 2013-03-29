@@ -53,15 +53,17 @@
     data = stackData(data);
 
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
-        width = 800 - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom;
+        width = $(window).width(),
+        height = $(window).height(),
+        plotWidth = width - margin.left - margin.right,
+        plotHeight = height - margin.top - margin.bottom;
 
-    var x = d3.scale.linear().range([0, width]),
-        y = d3.scale.linear().range([height, 0]);
+    var x = d3.scale.linear().range([0, plotWidth]),
+        y = d3.scale.linear().range([plotHeight, 0]);
 
     var svg = d3.select('#chart').append('svg')
-          .attr('width', 800)
-          .attr('height', 600)
+          .attr('width', '100%')
+          .attr('height', '100%');
 
     var plot = svg.append('g')
           .attr('class', 'plot')
@@ -105,11 +107,11 @@
 
     svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(" + margin.left + "," + (margin.top + height) + ")")
+        .attr("transform", "translate(" + margin.left + "," + (margin.top + plotHeight) + ")")
         .call(xAxis)
       .append("text")
         .attr("class", "label")
-        .attr("x", width>>1)
+        .attr("x", plotWidth>>1)
         .attr("y", 26)
         .style("text-anchor", "end")
         .text("year");
@@ -128,7 +130,7 @@
 
   }
 
-  $.getJSON('/api/v1/elevators/', function(response){
+  $.getJSON('data/', function(response){
     data = response;
     console.log(data.length);
     chart(data);
