@@ -1,13 +1,21 @@
 import json
 
 from django.http import HttpResponse
-from django.views.generic import View
+from django.views.generic import TemplateView
 
 from .models import Elevator
 
 
-class ElevatorList(View):
+class ElevatorList(TemplateView):
+    template_name = "tx_elevators/charts/elevatorlist.html"
+
     def get(self, request, **kwargs):
+        if 'data' in kwargs:
+            return self.get_data(request, **kwargs)
+        else:
+            return super(ElevatorList, self).get(request, **kwargs)
+
+    def get_data(self, request, **kwargs):
         queryset = Elevator.objects.filter(
             floors__gt=0, year_installed__lte=2013).select_related('building')
         queryset = queryset.exclude(equipment_type__in=[
@@ -28,8 +36,5 @@ class ElevatorList(View):
             'building__latitude',
             'building__longitude',
         ))
-        return self.render_to_response(context)
-
-    def render_to_response(self, context):
         content = json.dumps(context)
         return HttpResponse(content, content_type='application/json')

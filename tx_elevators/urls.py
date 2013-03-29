@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.views.decorators.gzip import gzip_page
 
 
-from . import api_views, views
+from . import chart_views, views
 
 
 urlpatterns = patterns('',
@@ -13,11 +13,13 @@ urlpatterns = patterns('',
 )
 
 
-# api url patterns
-apipatterns = patterns('',
-    url(r'^elevators/$', gzip_page(api_views.ElevatorList.as_view()))
+# chart url patterns
+chartpatterns = patterns('',
+    url(r'^elevatorlist/$', chart_views.ElevatorList.as_view()),
+    url(r'^elevatorlist/data/$', gzip_page(chart_views.ElevatorList.as_view()),
+        {'data': True}),
 )
 
 urlpatterns += patterns('',
-    url(r'^api/v1/', include(apipatterns)),
+    url(r'^chart/', include(chartpatterns)),
 )
