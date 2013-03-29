@@ -18,7 +18,7 @@
 <h2>Elevators</h2>
 <ul>
   {% for elevator in object.elevator_set.all %}
-    <li>
+    <li class="{{ elevator.css_classes }}">
       Equipment Identification Number: {{ elevator.decal }}
       Date of Last Certified Inspection: {{ elevator.last_inspection }}
       {{ elevator.equipment_type }}

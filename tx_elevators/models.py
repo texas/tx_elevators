@@ -132,3 +132,7 @@ class Elevator(models.Model):
 
     def __unicode__(self):
         return u"{0.building} {0.floors} ({0.year_installed})".format(self)
+
+    @property
+    def css_classes(self):
+        return self.equipment_type.split(' ')[0].lower()
