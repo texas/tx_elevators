@@ -11,19 +11,21 @@ class GoogleV3(object):
         self.geocoder = geocoders.GoogleV3(*args, **kwargs)
 
     def geocode(self, address):
-        store = anydbm.open('GoogleV3_cache', 'c')
         key = address
+        store = anydbm.open('GoogleV3_cache', 'c')
         value = store.get(key, None)
         if value is None:
             try:
                 value_raw = self.geocoder.geocode(address)
                 value = json.dumps(value_raw)
                 store[key] = value
+                store.close()
                 print "value retrieved from service"
                 return value_raw
             except (ValueError, geocoders.base.GeocoderResultError) as e:
                 value = str(e)
                 store[key] = value
+                store.close()
                 raise e
         store.close()
         print "value retrieved from db"
