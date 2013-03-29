@@ -15,7 +15,8 @@ class Landing(TemplateView):
             height=Max('elevator__floors')).order_by('-height')
         context['tallest_buildings'] = tallest_buildings[:15]
         oldest_elevators = Elevator.objects.exclude(
-            year_installed__lt=1000).order_by('year_installed')
+            year_installed__lt=1000).order_by('year_installed').\
+            distinct('building', 'year_installed')
         context['oldest_elevators'] = oldest_elevators[:15]
         densest_buildings = Building.objects.exclude(
             elevator__floors__isnull=True).annotate(
