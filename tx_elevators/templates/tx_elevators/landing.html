@@ -16,7 +16,9 @@
   <h2>Oldest Elevators</h2>
   <ol>
     {% for elevator in oldest_elevators %}
-      <li>{{ elevator }}</li>
+      <li><a href="{{ elevator.building.get_absolute_url }}">
+        {{ elevator.building }}</a>, installed in {{ elevator.year_installed }}
+      </li>
     {% endfor %}
   </ol>
 </section>
