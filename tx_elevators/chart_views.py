@@ -6,14 +6,19 @@ from django.views.generic import TemplateView
 from .models import Elevator
 
 
-class ElevatorList(TemplateView):
-    template_name = "tx_elevators/charts/elevatorlist.html"
-
+class BaseChart(TemplateView):
+    """Render a chart and supply its data."""
     def get(self, request, **kwargs):
         if 'data' in kwargs:
-            return self.get_data(request, **kwargs)
+            data = self.get_data(request, **kwargs)
+            content = json.dumps(data)
+            return HttpResponse(content, content_type='application/json')
         else:
-            return super(ElevatorList, self).get(request, **kwargs)
+            return super(BaseChart, self).get(request, **kwargs)
+
+
+class ElevatorList(BaseChart):
+    template_name = "tx_elevators/charts/elevatorlist.html"
 
     def get_data(self, request, **kwargs):
         queryset = Elevator.objects.filter(
@@ -36,5 +41,4 @@ class ElevatorList(TemplateView):
             'building__latitude',
             'building__longitude',
         ))
-        content = json.dumps(context)
-        return HttpResponse(content, content_type='application/json')
+        return context
