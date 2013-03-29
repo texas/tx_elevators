@@ -58,8 +58,20 @@
     }
   };
 
+
+  var closest = function(lat, lng){
+    var metric = distance.spherical;
+    // go ahead and sort in place.
+    store.sort(function(a, b){
+      // TODO make a lookup table?
+      return metric(lat, lng, b.latitude, b.longitude) - metric(lat, lng, a.latitude, a.longitude);
+    });
+    return store.slice(0, 10);
+  };
+
   exports.searchZip = searchZip;
   exports.d = distance;
+  exports.c = closest;
 
 })(window, window.jQuery);
 // "76104"
