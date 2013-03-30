@@ -40,9 +40,15 @@
 
     var marker = new google.maps.Marker({
       position: center,
+      draggable: true,
       map: map,
       icon: pinImage,
       shadow: pinShadow
+    });
+    google.maps.event.addDomListener(marker, 'dragend', function(evt){
+      // this: marker
+      var newLocation = evt.latLng;
+      console.log("drag ended", newLocation.lat(), newLocation.lng());
     });
 
     if (buildings){
