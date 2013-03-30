@@ -6,10 +6,10 @@
   </head>
   <body>
     {% block nav %}
-      <div>
+      <div class="nav">
         <button id=locate type=button>Locate Nearest Elevators</button>
-        <ol id=nearest>
-        </ol>
+        <ol id=nearest></ol>
+        <div id="nav-map-container"></div>
       </div>
     {% endblock %}
     {% block main_container %}
@@ -20,5 +20,6 @@
     {% endblock %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="{{ STATIC_URL }}tx_elevators/js/tx_elevators.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
   </body>
 </html>

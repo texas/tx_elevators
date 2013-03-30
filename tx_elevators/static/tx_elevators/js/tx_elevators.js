@@ -1,4 +1,17 @@
-/*global navigator, console */
+/*global window, navigator, console */
+// maps
+(function(exports, $){
+  var $container = $('#nav-map-container');
+  var load = function(centerLatLng){
+    console.log(centerLatLng);
+  };
+
+  // exports
+  exports.loadMap = load;
+
+})(window, window.jQuery);
+
+// app
 (function(exports, $){
   "use strict";
 
@@ -94,8 +107,9 @@
         building.address_1 + ', ' +
         building.city +
         '</li>');
-
     });
+
+    window.loadMap(position.coords);
   };
 
   $('#locate').one('click', function(){
