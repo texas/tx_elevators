@@ -4,7 +4,7 @@
   "use strict";
   var $container = $('#nav-map-container');
 
-  var load = function(centerLatLng){
+  var load = function(centerLatLng, buildings){
     var center = new google.maps.LatLng(
           centerLatLng.latitude,
           centerLatLng.longitude ),
@@ -21,6 +21,18 @@
       position: center,
       map: map
     });
+
+    if (buildings){
+      var building;
+      for (var i = 0; i < buildings.length; i++){
+        building = buildings[i];
+        new google.maps.Marker({
+          position: new google.maps.LatLng(building.latitude, building.longitude),
+          map: map,
+          title: building.name_1 + ' '  + building.address_1
+        });
+      }
+    }
   };
 
   // exports
@@ -117,8 +129,9 @@
   var gotPosition = function(position){
     var lat = position.coords.latitude,
         lng = position.coords.longitude;
-    var $container = $('#nearest').empty();
-    $.each(closestBuildings(lat, lng), function(idx, building){
+    var $container = $('#nearest').empty(),
+        buildings = closestBuildings(lat, lng);
+    $.each(buildings, function(idx, building){
       $container.append('<li>' +
         '<a href="' + buildingToUrl(building) + '">' + building.name_1 + '</a>, ' +
         building.address_1 + ', ' +
@@ -126,7 +139,7 @@
         '</li>');
     });
 
-    window.loadMap(position.coords);
+    window.loadMap(position.coords, buildings);
   };
 
   $('#locate').one('click', function(){
