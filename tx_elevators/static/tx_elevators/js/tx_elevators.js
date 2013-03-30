@@ -55,6 +55,8 @@
         console.log("drag ended", position.coords);
         window.getClosestBuildings(position);
       });
+    } else {
+      homePin.setPosition(center);
     }
 
     if (buildings){
@@ -197,7 +199,7 @@
     window.loadMap(position.coords, buildings);
   };
 
-  $('#locate').one('click', function(){
+  $('#locate').on('click', function(){
     navigator.geolocation.getCurrentPosition(gotPosition);
   });
 
