@@ -6,15 +6,27 @@
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
   </head>
   <body>
+    <header>
+      <div class="container">
+        {% block nav %}
+          <div class="nav">
+            <div class="row">
+              <div class="span8">
+                <div class="well well-small">
+                  <button id=locate class="btn" type=button><i class="icon-map-marker"></i> Locate Nearest Elevators</button><br>
+                  <ol id=nearest style="list-style: upper-alpha;"></ol>
+                </div>
+              </div>
+              <div class="span4">
+                <div id="nav-map-container" style="height: 250px;"></div>
+              </div>
+            </div>
+          </div>
+          {% block breadcrumbs %}{% endblock %}
+        {% endblock %}
+      </div>
+    </header>
     <div class="container">
-      {% block nav %}
-        <div class="nav">
-          <button id=locate type=button>Locate Nearest Elevators</button>
-          <div id="nav-map-container" style="float: right; width: 250px; height: 250px;"></div>
-          <ol id=nearest style="list-style: upper-alpha;"></ol>
-        </div>
-        {% block breadcrumbs %}{% endblock %}
-      {% endblock %}
       {% block main_container %}
         <div class="main" role="main">
           <div class="page-header">
