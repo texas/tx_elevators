@@ -107,6 +107,7 @@
     store = data;
     console.log(store.length);
     exports.store = store;
+    $(window).trigger('storeAvailable');
   };
 
   $.getJSON('/chart/locator/data/', storeData);
@@ -203,8 +204,18 @@
     navigator.geolocation.getCurrentPosition(gotPosition);
   });
 
-  $(window).load(function(){
-    navigator.geolocation.getCurrentPosition(gotPosition);
+  $(window).on('storeAvailable', function(){
+    var data = $('#building-data').data('building');
+    if (data){
+      gotPosition({
+          coords:{
+            latitude: data.latitude,
+            longitude: data.longitude
+          }
+      });
+    } else {
+      navigator.geolocation.getCurrentPosition(gotPosition);
+    }
   });
 
 

@@ -5,7 +5,7 @@
 
 
 {% block main %}
-<dl>
+<dl id="building-data" data-building='{"latitude": {{ object.latitude }}, "longitude": {{ object.longitude }}}'>
   <dt>Building Number</dt>
   <dd>{{ object.elbi }}</dd>
   <dt>Name</dt>
