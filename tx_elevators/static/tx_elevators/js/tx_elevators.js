@@ -122,8 +122,7 @@
       pinColor = "FE7569";
       buildingMarkers.forEach(function(x){ x.setMap(null); });
       buildingMarkers = [];
-      for (var i = 0; i < buildings.length; i++){
-        building = buildings[i];
+      $.each(buildings, function(i, building){
         position = new google.maps.LatLng(building.latitude, building.longitude);
 
         pinImage = new google.maps.MarkerImage(
@@ -156,7 +155,7 @@
         }
         buildingMarkers.push(buildingMarker);
         bounds.extend(position);
-      }
+      });
       map.fitBounds(bounds);
     }
   };
