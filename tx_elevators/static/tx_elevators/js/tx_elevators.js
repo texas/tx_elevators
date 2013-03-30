@@ -149,9 +149,9 @@
                   latitude: newLocation.lat(),
                   longitude: newLocation.lng()
                 }};
-            console.log(building, position);
-            $.post('/building/' + building.elbi + '/',
-              position);
+            $.post('/building/' + building.elbi + '/', position, function(data){
+              console.log(data);
+            });
           });
         }
         buildingMarkers.push(buildingMarker);
