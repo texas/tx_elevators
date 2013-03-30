@@ -1,5 +1,8 @@
-"""Sample Views"""
+import json
+
+from django.conf import settings
 from django.db.models import Count, Max
+from django.http import HttpResponse
 from django.views.generic import DetailView, TemplateView
 
 from .models import Building, Elevator
@@ -29,3 +32,18 @@ class BuildingView(DetailView):
     model = Building
     slug_field = 'elbi'
     slug_url_kwarg = 'elbi'
+
+    def post(self, request, **kwargs):
+        # for debugging
+        if not settings.DEBUG:
+            return HttpResponse(status_code=403)
+        instance = self.get_object()
+        lat = request.POST.get('coords[latitude]')
+        lng = request.POST.get('coords[longitude]')
+        instance.latitude = lat
+        instance.longitude = lng
+        instance.save()
+        content = json.dumps({
+            'status': 'OK',
+        })
+        return HttpResponse(content, content_type='application/json')
