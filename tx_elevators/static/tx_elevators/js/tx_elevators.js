@@ -3,7 +3,9 @@
 (function(exports, $){
   "use strict";
   var $container = $('#nav-map-container'),
-      map;
+      map,
+      homePin,
+      buildingMarkers = [];
 
   var initMap = function(center){
     var mapOptions = {
@@ -20,42 +22,49 @@
     var center = new google.maps.LatLng(
           centerLatLng.latitude,
           centerLatLng.longitude);
-
-    if (!map) {
-      initMap(center);
-    }
-
     var pinColor = "FFFF00";
-
     var pinImage = new google.maps.MarkerImage(
           "http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=home|" + pinColor,
           new google.maps.Size(21, 34),
           new google.maps.Point(0,0),
           new google.maps.Point(10, 34));
-
     var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
         new google.maps.Size(40, 37),
         new google.maps.Point(0, 0),
         new google.maps.Point(12, 35));
 
-    var marker = new google.maps.Marker({
-      position: center,
-      draggable: true,
-      map: map,
-      icon: pinImage,
-      shadow: pinShadow
-    });
-    google.maps.event.addDomListener(marker, 'dragend', function(evt){
-      // this: marker
-      var newLocation = evt.latLng;
-      console.log("drag ended", newLocation.lat(), newLocation.lng());
-    });
+    if (!map) {
+      initMap(center);
+    }
+
+    if (!homePin){
+      homePin = new google.maps.Marker({
+        position: center,
+        draggable: true,
+        map: map,
+        icon: pinImage,
+        shadow: pinShadow
+      });
+      google.maps.event.addDomListener(homePin, 'dragend', function(evt){
+        // this: marker
+        var newLocation = evt.latLng;
+            position = {coords:{
+              latitude: newLocation.lat(),
+              longitude: newLocation.lng()
+            }};
+        console.log("drag ended", position.coords);
+        window.getClosestBuildings(position);
+      });
+    }
 
     if (buildings){
       var building,
           position,
+          buildingMarker,
           bounds = new google.maps.LatLngBounds();
       pinColor = "FE7569";
+      buildingMarkers.forEach(function(x){ x.setMap(null); });
+      buildingMarkers = [];
       for (var i = 0; i < buildings.length; i++){
         building = buildings[i];
         position = new google.maps.LatLng(building.latitude, building.longitude);
@@ -67,13 +76,14 @@
           new google.maps.Point(0,0),
           new google.maps.Point(10, 34));
 
-        new google.maps.Marker({
+        buildingMarker = new google.maps.Marker({
           position: position,
           map: map,
           icon: pinImage,
           shadow: pinShadow,
           title: building.name_1 + ' '  + building.address_1
         });
+        buildingMarkers.push(buildingMarker);
         bounds.extend(position);
       }
       map.fitBounds(bounds);
@@ -199,7 +209,7 @@
   // exports
   // exports.searchZip = searchZip;
   // exports.d = distance;
-  // exports.c = closestBuildings;
+  exports.getClosestBuildings = gotPosition;
 
 })(window, window.jQuery);
 // "76104"
