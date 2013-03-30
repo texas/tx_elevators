@@ -125,6 +125,10 @@
     navigator.geolocation.getCurrentPosition(gotPosition);
   });
 
+  $(window).load(function(){
+    navigator.geolocation.getCurrentPosition(gotPosition);
+  });
+
 
   // exports
   // exports.searchZip = searchZip;
