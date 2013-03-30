@@ -30,16 +30,28 @@
   </dl>
 
   <h2>Elevators</h2>
-  <ul>
-    {% for elevator in object.elevator_set.all %}
-      <li class="{{ elevator.css_classes }}">
-        Equipment Identification Number: {{ elevator.decal }}
-        Date of Last Certified Inspection: {{ elevator.last_inspection }}
-        {{ elevator.equipment_type }}
-        {{ elevator.drive_type }}
-        {{ elevator.floors }} floors
-        ({{ elevator.year_installed }})
-      </li>
-    {% endfor %}
-  </ul>
+  <table class="table table-condensed table-hover">
+    <thead>
+      <tr>
+        <th>Equipment Identification Number</th>
+        <th>Date of Last Certified Inspection</th>
+        <th>Equipment Type</th>
+        <th>Drive Type</th>
+        <th>Floors</th>
+        <th>Year Installed</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for elevator in object.elevator_set.all %}
+        <tr class="{{ elevator.css_classes }}">
+          <td>{{ elevator.decal }}</td>
+          <td>{{ elevator.last_inspection }}</td>
+          <td>{{ elevator.equipment_type }}</td>
+          <td>{{ elevator.drive_type }}</td>
+          <td>{{ elevator.floors }}</td>
+          <td>{{ elevator.year_installed }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}
