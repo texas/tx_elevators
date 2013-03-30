@@ -71,6 +71,14 @@
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
     map = new google.maps.Map($container[0], mapOptions);
+    $('#recenter').click(function(){
+      var center = map.getCenter(),
+          position = {coords:{
+            latitude: center.lat(),
+            longitude: center.lng()
+          }};
+      window.getClosestBuildings(position);
+    });
   };
 
   var load = function(centerLatLng, buildings){
