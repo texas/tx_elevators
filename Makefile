@@ -24,4 +24,13 @@ scrape:
 	python tx_elevators/scrapers.py data/elevator_data_file.csv
 
 
-.PHONY: help test resetdb scrape
+dbpush:
+	test $(SCP_DUMP)
+	test $(SCP_URL)
+	pg_dump -Fc --no-acl --no-owner tx_elevators > tx_elevators.dump
+	scp tx_elevators.dump $(SCP_DUMP)
+	heroku pgbackups:restore DATABASE $(SCP_URL)
+	rm tx_elevators.dump
+
+
+.PHONY: help test resetdb scrape pushdb
