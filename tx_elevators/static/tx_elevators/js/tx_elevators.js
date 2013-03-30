@@ -55,12 +55,23 @@
       var building,
           position,
           bounds = new google.maps.LatLngBounds();
+      pinColor = "FE7569";
       for (var i = 0; i < buildings.length; i++){
         building = buildings[i];
         position = new google.maps.LatLng(building.latitude, building.longitude);
+
+        pinImage = new google.maps.MarkerImage(
+          "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=" +
+            String.fromCharCode(65 + i) + "|" + pinColor,
+          new google.maps.Size(21, 34),
+          new google.maps.Point(0,0),
+          new google.maps.Point(10, 34));
+
         new google.maps.Marker({
           position: position,
           map: map,
+          icon: pinImage,
+          shadow: pinShadow,
           title: building.name_1 + ' '  + building.address_1
         });
         bounds.extend(position);
