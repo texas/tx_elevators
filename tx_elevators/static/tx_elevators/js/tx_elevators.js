@@ -1,9 +1,18 @@
-/*global window, navigator, console */
+/*global window, navigator, console, google */
 // maps
 (function(exports, $){
+  "use strict";
   var $container = $('#nav-map-container');
+
   var load = function(centerLatLng){
-    console.log(centerLatLng);
+    var mapOptions = {
+      zoom: 14,
+      center: new google.maps.LatLng(
+        centerLatLng.latitude,
+        centerLatLng.longitude),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map($container[0], mapOptions);
   };
 
   // exports
