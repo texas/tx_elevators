@@ -5,14 +5,22 @@
   var $container = $('#nav-map-container');
 
   var load = function(centerLatLng){
-    var mapOptions = {
-      zoom: 14,
-      center: new google.maps.LatLng(
-        centerLatLng.latitude,
-        centerLatLng.longitude),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+    var center = new google.maps.LatLng(
+          centerLatLng.latitude,
+          centerLatLng.longitude ),
+        mapOptions = {
+          zoom: 14,
+          mapTypeControl: false,
+          streetViewControl: false,
+          center: center,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
     var map = new google.maps.Map($container[0], mapOptions);
+
+    var marker = new google.maps.Marker({
+      position: center,
+      map: map
+    });
   };
 
   // exports
