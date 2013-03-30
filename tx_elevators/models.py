@@ -41,8 +41,6 @@ class Building(models.Model):
 
     def geocode(self):
         lookup_bits = []
-        if self.name_1:
-            lookup_bits.append(self.address_1)
         if self.address_1:
             lookup_bits.append(self.address_1)
         if self.city:
@@ -53,7 +51,7 @@ class Building(models.Model):
             return
         from geopydb import geocoders
         g = geocoders.GoogleV3()
-        lookup = ','.join(map(str, lookup_bits))
+        lookup = ', '.join(map(str, lookup_bits))
         __, (lat, lng) = g.geocode(lookup)
         self.latitude = lat
         self.longitude = lng
