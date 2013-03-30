@@ -206,7 +206,7 @@
 
   $(window).on('storeAvailable', function(){
     var data = $('#building-data').data('building');
-    if (data){
+    if (data && data.latitude){
       gotPosition({
           coords:{
             latitude: data.latitude,
