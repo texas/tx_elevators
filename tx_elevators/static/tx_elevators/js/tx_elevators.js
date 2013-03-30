@@ -23,15 +23,20 @@
     });
 
     if (buildings){
-      var building;
+      var building,
+          position,
+          bounds = new google.maps.LatLngBounds();
       for (var i = 0; i < buildings.length; i++){
         building = buildings[i];
+        position = new google.maps.LatLng(building.latitude, building.longitude);
         new google.maps.Marker({
-          position: new google.maps.LatLng(building.latitude, building.longitude),
+          position: position,
           map: map,
           title: building.name_1 + ' '  + building.address_1
         });
+        bounds.extend(position);
       }
+      map.fitBounds(bounds);
     }
   };
 
