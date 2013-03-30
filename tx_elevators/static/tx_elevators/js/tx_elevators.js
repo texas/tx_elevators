@@ -2,20 +2,28 @@
 // maps
 (function(exports, $){
   "use strict";
-  var $container = $('#nav-map-container');
+  var $container = $('#nav-map-container'),
+      map;
 
-  var load = function(centerLatLng, buildings){
-    var center = new google.maps.LatLng(
-          centerLatLng.latitude,
-          centerLatLng.longitude ),
-        mapOptions = {
+  var initMap = function(center){
+    var mapOptions = {
           zoom: 14,
           mapTypeControl: false,
           streetViewControl: false,
           center: center,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-    var map = new google.maps.Map($container[0], mapOptions);
+    map = new google.maps.Map($container[0], mapOptions);
+  };
+
+  var load = function(centerLatLng, buildings){
+    var center = new google.maps.LatLng(
+          centerLatLng.latitude,
+          centerLatLng.longitude);
+
+    if (!map) {
+      initMap(center);
+    }
 
     var marker = new google.maps.Marker({
       position: center,
