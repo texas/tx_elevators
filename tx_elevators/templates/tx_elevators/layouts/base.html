@@ -5,7 +5,7 @@
     <title>{% block head_title %}{% endblock %}</title>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
   </head>
-  <body>
+  <body{% if debug %} data-debug="1"{% endif %}>
     <header>
       <div class="container">
         {% block nav %}
