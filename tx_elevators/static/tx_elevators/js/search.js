@@ -61,6 +61,7 @@
     var binContainer = d3.select('#name'), bins, lists, items;
     bins = binContainer.selectAll('.bin').data(binArray);
     bins
+      .attr('class', 'bin span4')
       .html(function(d){ return '<h4>' + d.name + ' <small>(' + d.buildings.length + ')</small></h4>'; });
     bins
       .enter()
@@ -72,14 +73,13 @@
         .remove();
     items = bins.selectAll('.item').data(function(d){ return d.buildings; });
     items
-      .text(function(d){ return d.name_1; })
-      .style('display', function(d, i){ return i < 10 ? '' : 'none'; });
+      .attr('class', function(d, i) { return 'item' + (i < 10 ? '' : ' overflow'); })
+      .text(function(d){ return d.name_1; });
     items
       .enter()
         .append('div')
-        .attr('class', 'item')
+        .attr('class', function(d, i) { return 'item' + (i < 10 ? '' : ' overflow'); })
         .text(function(d){ return d.name_1; })
-        .style('display', function(d, i){ return i < 10 ? '' : 'none'; })
         .on('click', function(d){
           var url = elbiToUrl(d.elbi);
           if (d3.event.ctrlKey){
@@ -126,6 +126,10 @@
     $('#q')
       .on('keydown', function(e){ if (e.which == 27) { this.value = ''; }})
       .on('keyup', processSearch);
+
+    $('#show-all').click(function(){
+      $('#name div.bin').toggleClass('show-all');
+    });
   };
   $.getJSON('/chart/search/data/', init);
 

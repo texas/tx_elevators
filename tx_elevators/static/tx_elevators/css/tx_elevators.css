@@ -20,3 +20,11 @@ body > header {
   cursor: pointer;
   font-size: 0.8em;
 }
+
+.search .overflow {
+  display: none;
+}
+
+.search .show-all .overflow {
+  display: block;
+}
