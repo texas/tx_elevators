@@ -35,7 +35,8 @@ dbpush:
 
 site:
 	mkdir -p site
-	cd site && wget -r localhost:8000 --force-html -e robots=off S -nH -nv --exclude-directories=building/*
+	cd site && wget -r localhost:8000 --force-html -e robots=off S -nH -nv \
+	--max-redirect 0 --exclude-directories=building/*
 
 upload:
 	python $(PROJECT)/manage.py s3_sync --dir site
