@@ -24,6 +24,10 @@
     return bin;
   };
 
+  var nameComparator = function(a, b){
+    return b.name < a.name ? 1 : -1;
+  };
+
   var prepNameData = function(data){
     var bins = binData(data, function(d){
       var key = d.name_1[0];
@@ -39,18 +43,27 @@
         buildings: v
       });
     });
-    binArray = binArray.sort(function(a, b) { return b.name < a.name ? 1 : -1; });
+    binArray = binArray.sort(nameComparator);
     prepBinsHtml(binArray);
   };
 
-  var prepBinsHtml = function(bins){
+  var prepBinsHtml = function(data){
     var binContainer = d3.select('#name');
-    console.log(binContainer, bins);
-    binContainer.selectAll('.bin').data(bins)
+    var bins = binContainer.selectAll('.bin').data(data)
       .enter()
         .append('div')
-        .attr('class', 'bin')
-        .html(function(d){ return d.name; });
+        .attr('class', 'bin span3')
+        .html(function(d){ return '<h4>' + d.name + '</h4>'; });
+    var lists = bins.selectAll('.list').data(function(d) { return [d]; })
+      .enter()
+        .append('div')
+        .attr('class', 'list');
+    lists.selectAll('.item').data(function(d){ return d.buildings; })
+      .enter()
+        .append('div')
+        .attr('class', 'item')
+        .text(function(d){ return d.name_1; })
+        .style('display', 'none');
   };
 
   var init = function(data){
