@@ -3,7 +3,7 @@
 (function(exports, $){
   "use strict";
 
-  var _data;
+  var _data, currentBinAccessor;
 
   var elbiToUrl = function(elbi){
     return $('#elbi-' + elbi + ' > a').prop('href');
@@ -31,14 +31,20 @@
     return b.name_1 < a.name_1 ? 1 : -1;
   };
 
-  var prepNameData = function(data){
-    var bins = binData(data, function(d){
+  var binAccessors = {
+    buildingName: function(d){
       var key = d.name_1[0];
       if ($.isNumeric(key)){
         return "0&ndash;9";
       }
       return key.toUpperCase();
-    });
+    },
+    city: function(d){ return d.city; },
+    zip: function(d){ return d.zip_code; }
+  };
+
+  var prepNameData = function(data){
+    var bins = binData(data, currentBinAccessor);
 
     var binArray = [];
     $.each(bins, function(k, v){
@@ -88,12 +94,7 @@
         .remove();
   };
 
-  var init = function(data){
-    window.data = data; // DEBUG
-    _data = data;
-    prepNameData(data);
-
-    $('#q').on('keyup', function(){
+  var processSearch = function(evt){
       var needle = this.value.toUpperCase(),
           filtered = _data.filter(function(d){ return d.name_1.indexOf(needle) !== -1; });
       console.log(filtered.length);
@@ -101,9 +102,29 @@
         console.log(filtered);
       }
       prepNameData(filtered);
-    });
   };
 
+  var init = function(data){
+    window.data = data; // DEBUG
+    _data = data;
+
+    var $methods = $('#search-container ul.nav > li');
+    $methods.find('a').click(function(e){
+      e.preventDefault();
+      var $this = $(this);
+      $this.parent().addClass('active').siblings().removeClass('active');
+
+      var method = $this.attr('href').split('#')[1];
+      currentBinAccessor = binAccessors[method];
+      processSearch.call(document.getElementById('q'));
+    });
+    var method = $methods.filter('.active').find('a').attr('href').split('#')[1];
+    currentBinAccessor = binAccessors[method];
+
+    prepNameData(data);
+
+    $('#q').on('keyup', processSearch);
+  };
   $.getJSON('/chart/search/data/', init);
 
 })(window, window.jQuery);
