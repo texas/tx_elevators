@@ -198,3 +198,9 @@ if DEBUG:
         'django_nose',
         'example_project.test_app',
     ]
+
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
