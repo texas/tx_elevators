@@ -61,12 +61,12 @@
     var binContainer = d3.select('#name'), bins, lists, items;
     bins = binContainer.selectAll('.bin').data(binArray);
     bins
-      .html(function(d){ return '<h4>' + d.name + '</h4>'; });
+      .html(function(d){ return '<h4>' + d.name + ' <small>(' + d.buildings.length + ')</small></h4>'; });
     bins
       .enter()
         .append('div')
         .attr('class', 'bin span4')
-        .html(function(d){ return '<h4>' + d.name + '</h4>'; });
+        .html(function(d){ return '<h4>' + d.name + ' <small>(' + d.buildings.length + ')</small></h4>'; });
     bins
       .exit()
         .remove();
