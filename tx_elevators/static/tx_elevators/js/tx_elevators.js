@@ -72,14 +72,16 @@
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
     map = new google.maps.Map($container[0], mapOptions);
-    $('#recenter').click(function(){
-      var center = map.getCenter(),
-          position = {coords:{
-            latitude: center.lat(),
-            longitude: center.lng()
-          }};
-      window.getClosestBuildings(position);
-    });
+    $('<button type="button" class="btn"><i class="icon-screenshot"></i> Re-do Search in Map</button>')
+      .click(function(){
+        var center = map.getCenter(),
+            position = {coords:{
+              latitude: center.lat(),
+              longitude: center.lng()
+            }};
+        window.getClosestBuildings(position);
+      })
+      .insertAfter($container);
   };
 
   var load = function(centerLatLng, buildings){
@@ -281,6 +283,7 @@
         ' km)</em></span></li>');
     });
 
+    $('#nav-map-container').height($('#nearest').parent().height());
     window.loadMap(position.coords, buildings);
   };
 
