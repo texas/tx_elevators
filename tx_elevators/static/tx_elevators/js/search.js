@@ -123,7 +123,9 @@
 
     prepNameData(data);
 
-    $('#q').on('keyup', processSearch);
+    $('#q')
+      .on('keydown', function(e){ if (e.which == 27) { this.value = ''; }})
+      .on('keyup', processSearch);
   };
   $.getJSON('/chart/search/data/', init);
 
