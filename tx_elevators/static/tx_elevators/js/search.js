@@ -74,11 +74,13 @@
     items = bins.selectAll('.item').data(function(d){ return d.buildings; });
     items
       .attr('class', function(d, i) { return 'item' + (i < 10 ? '' : ' overflow'); })
+      .attr('title', function(d){ return d.address_1 + ' ' + d.city + ', ' + d.zip_code; })
       .text(function(d){ return d.name_1; });
     items
       .enter()
         .append('div')
         .attr('class', function(d, i) { return 'item' + (i < 10 ? '' : ' overflow'); })
+        .attr('title', function(d){ return d.address_1 + ' ' + d.city + ', ' + d.zip_code; })
         .text(function(d){ return d.name_1; })
         .on('click', function(d){
           var url = elbiToUrl(d.elbi);
