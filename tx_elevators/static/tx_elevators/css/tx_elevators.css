@@ -16,6 +16,10 @@ body > header {
   display: none;
 }
 
+.bin h4 {
+  border-bottom: 1px solid #ddd;
+}
+
 .search .item {
   cursor: pointer;
   font-size: 0.8em;
