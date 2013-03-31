@@ -3,7 +3,7 @@
 (function(exports, $){
   "use strict";
 
-  var data;
+  var _data;
 
   var elbiToUrl = function(elbi){
     return $('#elbi-' + elbi + ' > a').prop('href');
@@ -29,6 +29,7 @@
   };
 
   var prepNameData = function(data){
+    _data = data;
     var bins = binData(data, function(d){
       var key = d.name_1[0];
       if ($.isNumeric(key)){
@@ -47,9 +48,14 @@
     prepBinsHtml(binArray);
   };
 
-  var prepBinsHtml = function(data){
+  var prepBinsHtml = function(binArray){
     var binContainer = d3.select('#name');
-    var bins = binContainer.selectAll('.bin').data(data)
+    $('#name input').on('keypress', function(){
+      var needle = this.value.toUpperCase();
+      var filtered = _data.filter(function(d){ return d.name_1.indexOf(needle) !== -1; });
+      console.log(filtered.length);
+    });
+    var bins = binContainer.selectAll('.bin').data(binArray)
       .enter()
         .append('div')
         .attr('class', 'bin span3')
