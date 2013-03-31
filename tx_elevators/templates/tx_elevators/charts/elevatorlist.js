@@ -1,0 +1,118 @@
+  var data;
+
+  function stackData(data){
+    var newData = [],
+        lookup = {};
+
+    // uhhh I'm sure d3 has this built in somewhere. I don't know where though.
+    // this is sort of like layouts.stack
+    var key, counter;
+    for (var i = 0; i < data.length; i++){
+      key = data[i].year_installed + ':' + data[i].floors;
+      if (!lookup[key]) {
+        lookup[key] = 0;
+      }
+      lookup[key]++;
+    }
+    var bits;
+    for (var key in lookup){
+      // TODO is own property
+      bits = key.split(':');
+      newData.push({
+        year_installed: parseInt(bits[0], 10),
+        floors: parseInt(bits[1], 10),
+        value: lookup[key]
+      })
+    }
+    return newData;
+  }
+
+  function chart(data){
+
+    data = stackData(data);
+
+    var margin = {top: 20, right: 20, bottom: 30, left: 40},
+        width = $(window).width(),
+        height = $(window).height(),
+        plotWidth = width - margin.left - margin.right,
+        plotHeight = height - margin.top - margin.bottom;
+
+    var x = d3.scale.linear().range([0, plotWidth]),
+        y = d3.scale.linear().range([plotHeight, 0]);
+
+    var svg = d3.select('#chart').append('svg')
+      .attr('viewBox', [0, 0, width, height].join(" "))
+      .attr('preserveAspectRatio', 'xMinYMinmeet')
+      .attr('width', '100%')
+      .attr('height', '100%');
+
+    var plot = svg.append('g')
+          .attr('class', 'plot')
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    xAttrName = 'year_installed',
+        yAttrName = 'floors',
+        xAccessor = function(d){ return d[xAttrName]; },
+        yAccessor = function(d){ return d[yAttrName]; },
+        vAccessor = function(d){ return d.value; },
+        xCoord = function(d){ return x(d[xAttrName]); },
+        yCoord = function(d){ return y(d[yAttrName]); };
+
+    // x.domain(d3.extent(data, xAccessor));
+    // y.domain(d3.extent(data, yAccessor));
+    x.domain([1913, 2013]);
+    y.domain([0, 80]);
+
+
+    var color = d3.scale.log()
+          .range(['#aad', '#556'])
+          .domain(d3.extent(data, vAccessor));
+    window.zz = color;
+
+    plot.selectAll('.dot').data(data)
+      .enter().append('circle')
+        .attr('class', 'dot')
+        .attr('r', 4)
+        .attr('cx', xCoord)
+        .attr('cy', yCoord)
+        .attr('stroke-width', 0)
+        .style('fill', function(d){ return color(d.value); })
+
+    var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom")
+          .tickFormat(function(d){ return d; }),
+        yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left");
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(" + margin.left + "," + (margin.top + plotHeight) + ")")
+        .call(xAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("x", plotWidth>>1)
+        .attr("y", 26)
+        .style("text-anchor", "end")
+        .text("year");
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .call(yAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("floors")
+
+  }
+
+  $.getJSON('data/', function(response){
+    data = response;
+    console.log(data.length);
+    chart(data);
+  });
