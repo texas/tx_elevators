@@ -267,10 +267,10 @@
         buildings = closestBuildings(lat, lng);
     $.each(buildings, function(idx, building){
       $container.append('<li>' +
-        '<a href="' + buildingToUrl(building) + '">' + building.name_1 + '</a>, ' +
-        building.address_1 + ', ' +
+        '<a href="' + buildingToUrl(building) + '">' + building.name_1 + '</a> ' +
+        '<span class="pull-right">' + building.address_1 + ', ' +
         building.city +
-        '</li>');
+        '</span></li>');
     });
 
     window.loadMap(position.coords, buildings);
