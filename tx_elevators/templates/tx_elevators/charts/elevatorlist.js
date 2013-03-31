@@ -2,7 +2,8 @@
 
   function stackData(data){
     var newData = [],
-        lookup = {};
+        lookup = {},
+        reference = {};
 
     // uhhh I'm sure d3 has this built in somewhere. I don't know where though.
     // this is sort of like layouts.stack
@@ -11,8 +12,10 @@
       key = data[i].year_installed + ':' + data[i].floors;
       if (!lookup[key]) {
         lookup[key] = 0;
+        reference[key] = [];
       }
       lookup[key]++;
+      reference[key].push(data[i]);
     }
     var bits;
     $.each(lookup, function(key, value){
@@ -20,6 +23,7 @@
       newData.push({
         year_installed: parseInt(bits[0], 10),
         floors: parseInt(bits[1], 10),
+        buildings: reference[key],
         value: value
       });
   });
@@ -114,19 +118,26 @@
         .style("text-anchor", "end")
         .text("floors");
 
-    var $legend = $('<div class="legend"><h3>Info</h3><ul class="content"></ul></div>')
+    var $legend = $('<div class="legend"><h3>Info</h3><ul class="content"><li><em>Nothing selected</em></li></ul></div>')
       .css({left: margin.left + 20, top: margin.top})
-      .appendTo($('#chart'));
-    var legend = d3.select('div.legend ul.content');
-    function updateLegend(d, i){
-      var items = legend.selectAll('li').data(function(d){ return [d]; });
-      items
-        .text(d.value);
-
-      items
-        .enter()
-          .append('li')
-          .text(d.value);
+      .appendTo($('#chart')),
+        $legendContent = $legend.find('ul.content');
+    function updateLegend(d){
+      $legendContent.empty().hide();
+      var n = Math.min(d.value, 10),
+          building;
+      // reduce to a unique set of buildings
+      var buildings = {};
+      for (var i = 0; i < d.value; i++){
+        buildings[d.buildings[i].building__name_1] = d.buildings[i];
+      }
+      $.each(buildings, function(key, building){
+        $('<li class="building">' +
+          building.building__name_1 + ', <em>' + building.building__city +
+          '</em></li>')
+        .appendTo($legendContent);
+      });
+      $legendContent.show();
     }
   }
 

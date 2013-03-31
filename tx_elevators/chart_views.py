@@ -22,7 +22,10 @@ class ElevatorList(BaseChart):
 
     def get_data(self, request, **kwargs):
         queryset = Elevator.objects.filter(
-            floors__gt=0, year_installed__lte=2013).select_related('building')
+            floors__gt=0,
+            year_installed__gte=1913,
+            year_installed__lte=2013,
+        ).select_related('building')
         queryset = queryset.exclude(equipment_type__in=[
             'ESCALATOR',
             'MOVING SIDEWALK',
@@ -33,13 +36,11 @@ class ElevatorList(BaseChart):
             'UNKNOWN',
         ])
         context = list(queryset.values(
-            'decal',
             'floors',
             'equipment_type',
             'year_installed',
-            'building__elbi',
-            'building__latitude',
-            'building__longitude',
+            'building__city',
+            'building__name_1',
         ))
         return context
 
