@@ -59,3 +59,17 @@ class Locator(BaseChart):
             'longitude',
         ))
         return context
+
+
+class Search(BaseChart):
+    template_name = "TODO"  # TODO
+
+    def get_data(self, request, **kwargs):
+        queryset = Building.objects.all()
+        context = list(queryset.values(
+            'elbi',
+            'name_1',
+            'city',
+            'zip_code',
+        ))
+        return context

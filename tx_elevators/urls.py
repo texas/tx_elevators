@@ -22,6 +22,8 @@ chartpatterns = patterns('',
         {'data': True}),
     url(r'^locator/data/$', gzip_page(chart_views.Locator.as_view()),
         {'data': True}),
+    url(r'^search/data/$', gzip_page(chart_views.Search.as_view()),
+        {'data': True}),
 )
 
 urlpatterns += patterns('',

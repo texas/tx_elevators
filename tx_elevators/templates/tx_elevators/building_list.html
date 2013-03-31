@@ -6,13 +6,23 @@
 
 
 {% block main %}
-  <ol class="buildings">
-    {% for object in object_list %}
-      <li id="elbi-{{ object.elbi }}" class="building" data-elbi="{{ object.elbi }}">
-        <a href="{{ object.get_absolute_url }}">{{ object }}</a>
-      </li>
-    {% endfor %}
-  </ol>
+  <section class="show-for-nojs">
+    <ol class="buildings">
+      {% for object in object_list %}
+        <li id="elbi-{{ object.elbi }}" class="building" data-elbi="{{ object.elbi }}">
+          <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+        </li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  <section id="search-container" class="hide-for-nojs">
+    <h3>Search By:</h3>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#name">Name</a></li>
+      <li><a href="#zip">Zip</a></li>
+    </ul>
+  </section>
 {% endblock %}
 
 

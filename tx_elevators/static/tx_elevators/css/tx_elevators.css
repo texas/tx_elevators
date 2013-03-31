@@ -2,3 +2,16 @@ body > header {
   margin-top: 40px;
   padding-top: 1em;
 }
+
+
+.show-for-nojs {
+  display: none;
+}
+
+.no-js .show-for-nojs {
+  display: block;
+}
+
+.no-js .hide-for-nojs {
+  display: none;
+}
