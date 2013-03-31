@@ -170,31 +170,21 @@
     }
   };
 
+
   // exports
   exports.loadMap = load;
 
 })(window, window.jQuery);
 
+
 // app
 (function(exports, $){
   "use strict";
 
-  var store;
+  var _data;
 
   var storeData = function(data){
-    store = data;
-    exports.store = store;
-    $(window).trigger('storeAvailable');
-  };
-
-  $.getJSON('/chart/locator/data.json', storeData);
-
-
-  var searchZip = function(zip_code){
-    var searchZipFilter = function(x){
-      return x.zip_code == zip_code;
-    };
-    return store.filter(searchZipFilter);
+    _data = data;
   };
 
 
@@ -244,15 +234,18 @@
   };
 
 
+  // Get the closest `Building`s to `lat` and `lng`.
+  //
+  // Modifies the global `_data` by storing the distance and also sorts it.
   var closestBuildings = function(lat, lng){
     var metric = distance.spherical, x;
-    for (var i = 0; i < store.length; i++){
-      x = store[i];
+    for (var i = 0; i < _data.length; i++){
+      x = _data[i];
       x.distance = metric(lat, lng, x.latitude, x.longitude);
     }
     // go ahead and sort in place.
-    store.sort(function(a, b){ return a.distance - b.distance; });
-    return store.slice(0, 10);
+    _data.sort(function(a, b){ return a.distance - b.distance; });
+    return _data.slice(0, 10);
   };
 
 
@@ -295,7 +288,10 @@
     navigator.geolocation.getCurrentPosition(gotPosition);
   });
 
-  $(window).on('storeAvailable', function(){
+  $.getJSON('/chart/locator/data.json', storeData)
+  .success(function(){
+    // get position of currently building if on building detail page or user's
+    // location.
     var data = $('#building-data').data('building');
     if (data && data.latitude){
       gotPosition({
@@ -311,7 +307,6 @@
 
 
   // exports
-  // exports.searchZip = searchZip;
   // exports.d = distance;
   exports.getClosestBuildings = gotPosition;
 
@@ -319,7 +314,15 @@
 
 
 // chart loader
+//
+// Looks for: `<div class="chart"></div>` and fills them with the corresponsing
+// chart. Also makes sure the chart resizes. Always runs.
+//
+// Required attrs:
+// * data-src : the url we can fetch the chart
+//
 (function(exports, $){
+  "use strict";
   var charts = [];
   $('div.chart').each(function(){
     var $this = $(this),
