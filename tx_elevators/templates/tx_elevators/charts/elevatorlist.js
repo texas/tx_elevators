@@ -143,5 +143,6 @@
 
   $.getJSON('data/', function(response){
     _data = response;
+    $('.loading').removeClass('loading');
     chart(_data);
   });

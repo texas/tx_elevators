@@ -8,6 +8,21 @@ body {
   font: 10px sans-serif;
 }
 
+.loading {
+  background: #ddd;
+  border: 1px solid #ccc;
+}
+
+.loading:before {
+  content: "loading...";
+  color: #aaa;
+  display: block;
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 1;
+  margin: 0.25em;
+}
+
 .legend {
   border: 1px solid #888;
   color: #444;
