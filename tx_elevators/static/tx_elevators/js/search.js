@@ -69,7 +69,7 @@
         .append('div')
         .attr('class', 'item')
         .text(function(d){ return d.name_1; })
-        .style('display', 'none');
+        .style('display', function(d, i){ return i < 10 ? '' : 'none'; });
   };
 
   var init = function(data){
