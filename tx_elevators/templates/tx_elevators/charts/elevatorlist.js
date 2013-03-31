@@ -80,7 +80,8 @@
         .attr('stroke-width', 0)
         .attr('width', barWidth)
         .attr('height', barHeight)
-        .style('fill', function(d){ return color(d.value); });
+        .style('fill', function(d){ return color(d.value); })
+        .on('mouseover', updateLegend);
 
     var xAxis = d3.svg.axis()
           .scale(x)
@@ -112,6 +113,21 @@
         .attr("dy", ".71em")
         .style("text-anchor", "end")
         .text("floors");
+
+    var $legend = $('<div class="legend"><h3>Info</h3><ul class="content"></ul></div>')
+      .css({left: margin.left + 20, top: margin.top})
+      .appendTo($('#chart'));
+    var legend = d3.select('div.legend ul.content');
+    function updateLegend(d, i){
+      var items = legend.selectAll('li').data(function(d){ return [d]; });
+      items
+        .text(d.value);
+
+      items
+        .enter()
+          .append('li')
+          .text(d.value);
+    }
   }
 
   $.getJSON('data/', function(response){

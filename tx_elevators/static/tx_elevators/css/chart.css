@@ -8,6 +8,19 @@ body {
   font: 10px sans-serif;
 }
 
+h3 {
+  margin: 0;
+}
+
+.legend {
+  border: 1px solid #666;
+  position: absolute;
+}
+
+.legend .content {
+  max-height: 4em;
+}
+
 .axis path,
 .axis line {
   fill: none;
