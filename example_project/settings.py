@@ -188,9 +188,6 @@ LOGGING = {
 if DEBUG:
     TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
-    MIDDLEWARE_CLASSES.append(
-        'debug_toolbar.middleware.DebugToolbarMiddleware')
-
     # extra apps used for development
     INSTALLED_APPS += [
         'django_extensions',
