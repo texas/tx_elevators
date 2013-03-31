@@ -207,7 +207,7 @@
 
   // http://www.movable-type.co.uk/scripts/latlong.html
   var distance = {
-    R: 63741,  // kilometers
+    R: 6371,  // kilometers
     haversine: function(lat1, lng1, lat2, lng2){
       var dLat = (lat2-lat1).toRad();
       var dLon = (lng2-lng1).toRad();
@@ -270,8 +270,8 @@
       $container.append('<li>' +
         '<a href="' + buildingToUrl(building) + '">' + building.name_1 + '</a> ' +
         '<span class="pull-right">' + building.address_1 + ', ' +
-        building.city +
-        '</span></li>');
+        building.city + ' <em>(' + building.distance.toFixed(2) +
+        ' km)</em></span></li>');
     });
 
     window.loadMap(position.coords, buildings);
