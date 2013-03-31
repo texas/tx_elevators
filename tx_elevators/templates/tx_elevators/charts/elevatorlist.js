@@ -58,9 +58,8 @@
         yCoord = function(d){ return y(d[yAttrName]); };
 
     // x.domain(d3.extent(data, xAccessor));
-    // y.domain(d3.extent(data, yAccessor));
     x.domain([1913, 2013]);
-    y.domain([0, 80]);
+    y.domain([0, d3.max(data, yAccessor)]).nice();
 
 
     var color = d3.scale.log()
