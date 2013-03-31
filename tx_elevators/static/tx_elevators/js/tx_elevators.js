@@ -255,10 +255,6 @@
 
 
   // hook up UI
-  if (!navigator.geolocation){
-    $('body').addClass('no-geolocation');
-  }
-
   // Get the url for a building based on server-side url pattern
   var buildingToUrl = function(building){
     return '/building/' + building.elbi + '/';
