@@ -58,16 +58,17 @@
   };
 
   var prepBinsHtml = function(binArray){
+    var _ = d3.format(",");
     var binContainer = d3.select('#name'), bins, lists, items;
     bins = binContainer.selectAll('.bin').data(binArray);
     bins
       .attr('class', 'bin span4')
-      .html(function(d){ return '<h4>' + d.name + ' <small>(' + d.buildings.length + ')</small></h4>'; });
+      .html(function(d){ return '<h4>' + d.name + ' <small>(' + _(d.buildings.length) + ')</small></h4>'; });
     bins
       .enter()
         .append('div')
         .attr('class', 'bin span4')
-        .html(function(d){ return '<h4>' + d.name + ' <small>(' + d.buildings.length + ')</small></h4>'; });
+        .html(function(d){ return '<h4>' + d.name + ' <small>(' + _(d.buildings.length) + ')</small></h4>'; });
     bins
       .exit()
         .remove();
