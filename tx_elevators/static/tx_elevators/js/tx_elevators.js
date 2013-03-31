@@ -244,12 +244,13 @@
 
 
   var closestBuildings = function(lat, lng){
-    var metric = distance.spherical;
+    var metric = distance.spherical, x;
+    for (var i = 0; i < store.length; i++){
+      x = store[i];
+      x.distance = metric(lat, lng, x.latitude, x.longitude);
+    }
     // go ahead and sort in place.
-    store.sort(function(a, b){
-      // TODO make a lookup table?
-      return metric(lat, lng, a.latitude, a.longitude) - metric(lat, lng, b.latitude, b.longitude);
-    });
+    store.sort(function(a, b){ return a.distance - b.distance; });
     return store.slice(0, 10);
   };
 
