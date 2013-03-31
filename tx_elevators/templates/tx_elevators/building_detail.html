@@ -43,7 +43,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for elevator in object.elevator_set.all %}
+      {% for elevator in object.elevator_set.for_table %}
         <tr class="{{ elevator.css_classes }}">
           <td>{{ elevator.decal }}</td>
           <td>{{ elevator.last_inspection }}</td>

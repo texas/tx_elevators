@@ -62,6 +62,20 @@ class Building(models.Model):
         self.save()
 
 
+class ElevatorManager(models.Manager):
+    use_for_related_fields = True
+
+    def for_table(self):
+        """
+        The queryset that should be used inside the building_detail template.
+        """
+        return self.get_query_set().order_by(
+            '-floors',
+            '-equipment_type',
+            'drive_type',
+        )
+
+
 class Elevator(models.Model):
     """Something humans use to go up a `Building`."""
     # IDNO
@@ -131,6 +145,9 @@ class Elevator(models.Model):
     year_installed = models.IntegerField()
 
     building = models.ForeignKey(Building)
+
+    # managers
+    objects = ElevatorManager()
 
     def __unicode__(self):
         return u"{0.building} {0.floors} ({0.year_installed})".format(self)
