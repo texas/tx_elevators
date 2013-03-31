@@ -50,4 +50,4 @@ class BuildingView(DetailView):
 
 
 class BuildingsList(ListView):
-    model = Building
+    queryset = Building.objects.all().order_by('name_1')

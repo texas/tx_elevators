@@ -1,1 +1,12 @@
 {% extends "tx_elevators/layouts/base.html" %}
+
+
+{% block main %}
+  <ol>
+    {% for object in object_list %}
+      <li class="building" data-elbi="{{ object.elbi }}">
+        <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+      </li>
+    {% endfor %}
+  </ol>
+{% endblock %}
