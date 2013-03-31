@@ -288,10 +288,7 @@
 
     if (!$mapContainer.height()) {
       // show the first time
-      $mapContainer.height($well.outerHeight());
-    } else {
-      // ease height after that
-      $mapContainer.animate({height: $well.outerHeight()});
+      $mapContainer.height(220);  // just hard code this. bleh.
     }
     window.loadMap(position.coords, buildings);
   };
