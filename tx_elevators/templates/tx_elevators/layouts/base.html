@@ -9,7 +9,7 @@
     <link href="{{ STATIC_URL }}tx_elevators/css/tx_elevators.css" rel="stylesheet">
   </head>
   <body{% if debug %} data-debug="1"{% endif %} class="{% block body_class %}{% endblock %}">
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse">
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="{% url 'tx_elevators:home' %}">Home</a>
@@ -26,20 +26,16 @@
     </div>
     <header id="location-container">
       <div class="container">
-        {% block nav %}
-          <div class="nav">
-            <div class="row">
-              <div class="span7">
-                <div class="well well-small text-center" style="display: none;">
-                  <ol id=nearest></ol>
-                </div>
-              </div>
-              <div class="span5 text-center">
-                <div id="nav-map-container"></div>
-              </div>
+        <div class="row">
+          <div class="span7">
+            <div class="well well-small" style="display: none;">
+              <ol id=nearest></ol>
             </div>
           </div>
-        {% endblock %}
+          <div class="span5 text-center">
+            <div id="nav-map-container"></div>
+          </div>
+        </div>
       </div>
     </header>
     <div class="container">
