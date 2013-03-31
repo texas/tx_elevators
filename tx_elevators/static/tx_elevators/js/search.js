@@ -27,6 +27,9 @@
   var nameComparator = function(a, b){
     return b.name < a.name ? 1 : -1;
   };
+  var buildingNameComparator = function(a, b){
+    return b.name_1 < a.name_1 ? 1 : -1;
+  };
 
   var prepNameData = function(data){
     var bins = binData(data, function(d){
@@ -36,11 +39,12 @@
       }
       return key.toUpperCase();
     });
+
     var binArray = [];
     $.each(bins, function(k, v){
       binArray.push({
         name: k,
-        buildings: v
+        buildings: v.sort(buildingNameComparator)
       });
     });
     binArray = binArray.sort(nameComparator);
