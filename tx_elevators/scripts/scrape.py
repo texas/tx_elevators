@@ -5,6 +5,31 @@ import sys
 from tx_elevators.models import Building, Elevator
 
 
+def setfield(obj, fieldname, value):
+    """Fancy setattr with debugging."""
+    old = getattr(obj, fieldname)
+    if str(old) != str(value):
+        setattr(obj, fieldname, value)
+        if not hasattr(obj, '_is_dirty'):
+            obj._is_dirty = []
+        obj._is_dirty.append("%s %s->%s" % (fieldname, old, value))
+
+
+def update(obj, data):
+    """
+    Fancy way to update `obj` with `data` dict.
+
+    Returns True if data changed and  was saved.
+    """
+    for key, value in data.items():
+        setfield(obj, key, value)
+    if getattr(obj, '_is_dirty', None):
+        logger.debug(obj._is_dirty)
+        obj.save()
+        del obj._is_dirty
+        return True
+
+
 def format_row(row):
     # trim white space
     for key, value in row.items():
@@ -35,6 +60,8 @@ def process_row(row):
         elbi=row['LICNO'],
         defaults=default_data,
     )
+    if not created:
+        update(building, default_data)
 
     default_data = dict(
         tdlr_id=row['IDNO'],
@@ -51,10 +78,12 @@ def process_row(row):
         decal=row['SUB_NO'],
         defaults=default_data,
     )
+    if not created:
+        update(elevator, default_data)
 
 
 def process(path):
-    with open(path) as f:
+    with open(path, 'rU') as f:
         reader = csv.DictReader(f)
         for i, row in enumerate(reader):
             if not i % 1000:
