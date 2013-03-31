@@ -35,8 +35,13 @@ dbpush:
 
 site:
 	mkdir -p site
-	cd site && wget -r localhost:8000 --force-html -e robots=off S -nH -nv \
-	--exclude-directories=building/*
+	cd site && wget -r localhost:8000 --force-html -e robots=off S -nH -nv --exclude-directories=building/*
+
+upload:
 	python $(PROJECT)/manage.py s3_sync --dir site
 
-.PHONY: help test resetdb scrape pushdb site
+serve:
+	cd site && python -m SimpleHTTPServer 8088
+
+
+.PHONY: help test resetdb scrape pushdb site upload serve
