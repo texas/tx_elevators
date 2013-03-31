@@ -84,9 +84,11 @@ class Command(BaseCommand):
     FILTER_LIST = ['.DS_Store', '.svn', '.hg', '.git', 'Thumbs.db']
     GZIP_CONTENT_TYPES = (
         'text/css',
+        'application/json',
         'application/javascript',
         'application/x-javascript',
-        'text/javascript'
+        'text/javascript',
+        'text/html',
     )
 
     uploaded_files = []
