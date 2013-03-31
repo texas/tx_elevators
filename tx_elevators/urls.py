@@ -8,6 +8,8 @@ from . import chart_views, views
 urlpatterns = patterns('',
     url(r'^$', views.Landing.as_view(),
         name="home"),
+    url(r'^building/$', views.BuildingsList.as_view(),
+        name="building_list"),
     url(r'^building/(?P<elbi>\d+)/$', views.BuildingView.as_view(),
         name="building_detail")
 )

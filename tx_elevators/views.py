@@ -3,7 +3,7 @@ import json
 from django.conf import settings
 from django.db.models import Count, Max
 from django.http import HttpResponse
-from django.views.generic import DetailView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView
 
 from .models import Building, Elevator
 
@@ -47,3 +47,7 @@ class BuildingView(DetailView):
             'status': 'OK',
         })
         return HttpResponse(content, content_type='application/json')
+
+
+class BuildingsList(ListView):
+    model = Building
