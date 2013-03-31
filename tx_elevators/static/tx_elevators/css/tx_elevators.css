@@ -21,6 +21,7 @@ body > header {
   font-size: 0.8em;
   text-align: left;
   list-style: upper-alpha;
+  margin-bottom: 0;
 }
 
 #nearest li {

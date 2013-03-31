@@ -17,19 +17,21 @@
             <li class="hidden-phone">
               <a href="{% url 'tx_elevators:building_list' %}">Buildings</a>
             </li>
+            <li>
+              <button id=locate class="btn" type=button><i class="icon-map-marker"></i> Locate Nearest Elevators</button>
+            </li>
           </ul>
         </div>
       </div>
     </div>
-    <header>
+    <header id="location-container">
       <div class="container">
         {% block nav %}
           <div class="nav">
             <div class="row">
               <div class="span7">
-                <div class="well well-small text-center">
-                  <button id=locate class="btn" type=button><i class="icon-map-marker"></i> Locate Nearest Elevators</button>
-                  <ol id=nearest style="list-style: upper-alpha;"></ol>
+                <div class="well well-small text-center" style="display: none;">
+                  <ol id=nearest></ol>
                 </div>
               </div>
               <div class="span5 text-center">

@@ -271,11 +271,13 @@
   var gotPosition = function(position){
     var lat = position.coords.latitude,
         lng = position.coords.longitude;
-    var $container = $('#nearest').empty(),
+    var $container = $('#location-container').show(),
+        $listContainer = $('#nearest').empty(),
+        $well = $listContainer.parent().show(),
         buildings = closestBuildings(lat, lng),
         showCity = hasMultipleCities(buildings);
     $.each(buildings, function(idx, building){
-      $container.append('<li>' +
+      $listContainer.append('<li>' +
         '<a href="' + building.url + '">' + building.name_1 + '</a> ' +
         '<span class="pull-right">' + building.address_1 +
         (showCity ? ', ' + building.city : '') +
@@ -283,7 +285,7 @@
         ' km)</em></span></li>');
     });
 
-    $('#nav-map-container').height($('#nearest').parent().height());
+    $('#nav-map-container').height($well.outerHeight());
     window.loadMap(position.coords, buildings);
   };
 
