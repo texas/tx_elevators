@@ -48,17 +48,20 @@ class ElevatorList(BaseChart):
 class Locator(BaseChart):
     template_name = "TODO"  # TODO
 
+    def annotate(self, qs):
+        for obj in qs:
+            yield {
+                'elbi': obj.elbi,
+                'name_1': obj.name_1,
+                'address_1': obj.address_1,
+                'city': obj.city,
+                'latitude': obj.latitude,
+                'longitude': obj.longitude,
+            }
+
     def get_data(self, request, **kwargs):
         queryset = Building.objects.exclude(latitude=None)
-        context = list(queryset.values(
-            'elbi',
-            'name_1',
-            'address_1',
-            'city',
-            'zip_code',
-            'latitude',
-            'longitude',
-        ))
+        context = list(self.annotate(queryset))
         return context
 
 
