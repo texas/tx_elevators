@@ -23,6 +23,10 @@ body > header {
   list-style: upper-alpha;
 }
 
+#nearest li {
+  clear: right;
+}
+
 
 .bin h4 {
   border-bottom: 1px solid #ddd;
