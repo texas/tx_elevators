@@ -67,13 +67,16 @@
           .domain(d3.extent(data, vAccessor));
     window.zz = color;
 
+    var barWidth = x(x.domain()[0] + 1),  // 1 unit wide
+        barHeight = y(y.domain()[1] - 1);  // 1 unit high
     plot.selectAll('.dot').data(data)
-      .enter().append('circle')
+      .enter().append('rect')
         .attr('class', 'dot')
-        .attr('r', 4)
-        .attr('cx', xCoord)
-        .attr('cy', yCoord)
+        .attr('x', xCoord)
+        .attr('y', yCoord)
         .attr('stroke-width', 0)
+        .attr('width', barWidth)
+        .attr('height', barHeight)
         .style('fill', function(d){ return color(d.value); });
 
     var xAxis = d3.svg.axis()
