@@ -187,7 +187,7 @@
     $(window).trigger('storeAvailable');
   };
 
-  $.getJSON('/chart/locator/data/', storeData);
+  $.getJSON('/chart/locator/data.json', storeData);
 
 
   var searchZip = function(zip_code){

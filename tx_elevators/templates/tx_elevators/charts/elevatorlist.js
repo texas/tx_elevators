@@ -141,7 +141,7 @@
     }
   }
 
-  $.getJSON('data/', function(response){
+  $.getJSON('data.json', function(response){
     _data = response;
     $('.loading').removeClass('loading');
     chart(_data);
