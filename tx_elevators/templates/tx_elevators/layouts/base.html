@@ -1,3 +1,4 @@
+{% load url from future %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,6 +7,13 @@
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
   </head>
   <body{% if debug %} data-debug="1"{% endif %}>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="{% url 'tx_elevators:home' %}">Home</a>
+        </div>
+      </div>
+    </div>
     <header>
       <div class="container">
         {% block nav %}
@@ -25,7 +33,6 @@
               </div>
             </div>
           </div>
-          {% block breadcrumbs %}{% endblock %}
         {% endblock %}
       </div>
     </header>

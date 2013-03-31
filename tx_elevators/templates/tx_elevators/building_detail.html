@@ -5,13 +5,6 @@
 {% block page_title %}{{ object }}{% endblock %}
 
 
-{% block breadcrumbs %}
-  <ul class="breadcrumb">
-    <li><a href="{% url 'tx_elevators:home' %}">Home</a> <span class="divider">/</span></li>
-    <li class="active">{{ object }}</li>
-  </ul>
-{% endblock %}
-
 {% block main %}
   <dl id="building-data" class="dl-horizontal" data-building='{"latitude": {{ object.latitude }}, "longitude": {{ object.longitude }}}'>
     <dt>Building Number</dt>
