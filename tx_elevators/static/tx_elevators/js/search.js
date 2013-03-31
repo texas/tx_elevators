@@ -29,11 +29,10 @@
   };
 
   var prepNameData = function(data){
-    _data = data;
     var bins = binData(data, function(d){
       var key = d.name_1[0];
       if ($.isNumeric(key)){
-        return "0";
+        return "0&ndash;9";
       }
       return key.toUpperCase();
     });
@@ -49,32 +48,55 @@
   };
 
   var prepBinsHtml = function(binArray){
-    var binContainer = d3.select('#name');
-    $('#name input').on('keypress', function(){
-      var needle = this.value.toUpperCase();
-      var filtered = _data.filter(function(d){ return d.name_1.indexOf(needle) !== -1; });
-      console.log(filtered.length);
-    });
-    var bins = binContainer.selectAll('.bin').data(binArray)
+    var binContainer = d3.select('#name'), bins, lists, items;
+    bins = binContainer.selectAll('.bin').data(binArray);
+    bins
+      .html(function(d){ return '<h4>' + d.name + '</h4>'; });
+    bins
       .enter()
         .append('div')
-        .attr('class', 'bin span3')
+        .attr('class', 'bin span4')
         .html(function(d){ return '<h4>' + d.name + '</h4>'; });
-    var lists = bins.selectAll('.list').data(function(d) { return [d]; })
-      .enter()
-        .append('div')
-        .attr('class', 'list');
-    lists.selectAll('.item').data(function(d){ return d.buildings; })
+    bins
+      .exit()
+        .remove();
+    // lists = bins.selectAll('.list').data(function(d) { return [d]; });
+    // lists
+    //   .enter()
+    //     .append('div')
+    //     .attr('class', 'list');
+    // lists
+    //   .exit()
+    //     .remove();
+    items = bins.selectAll('.item').data(function(d){ return d.buildings; });
+    items
+      .text(function(d){ return d.name_1; })
+      .style('display', function(d, i){ return i < 10 ? '' : 'none'; });
+    items
       .enter()
         .append('div')
         .attr('class', 'item')
         .text(function(d){ return d.name_1; })
         .style('display', function(d, i){ return i < 10 ? '' : 'none'; });
+    items
+      .exit()
+        .remove();
   };
 
   var init = function(data){
     window.data = data; // DEBUG
+    _data = data;
     prepNameData(data);
+
+    $('#name input').on('keyup', function(){
+      var needle = this.value.toUpperCase(),
+          filtered = _data.filter(function(d){ return d.name_1.indexOf(needle) !== -1; });
+      console.log(filtered.length);
+      if (filtered.length < 10) {
+        console.log(filtered);
+      }
+      prepNameData(filtered);
+    });
   };
 
   $.getJSON('/chart/search/data/', init);

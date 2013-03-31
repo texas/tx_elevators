@@ -7,7 +7,7 @@
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}tx_elevators/css/tx_elevators.css" rel="stylesheet">
   </head>
-  <body{% if debug %} data-debug="1"{% endif %}>
+  <body{% if debug %} data-debug="1"{% endif %} class="{% block body_class %}{% endblock %}">
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">

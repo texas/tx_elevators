@@ -15,3 +15,7 @@ body > header {
 .no-js .hide-for-nojs {
   display: none;
 }
+
+.search .item {
+  font-size: 0.8em;
+}
