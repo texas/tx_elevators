@@ -21,7 +21,7 @@ resetdb:
 
 scrape:
 	cd data && $(MAKE) $(MFLAGS)
-	python tx_elevators/scrapers.py data/elevator_data_file.csv
+	python tx_elevators/scripts/scraper.py data/elevator_data_file.csv
 
 
 dbpush:
