@@ -1,4 +1,4 @@
-  var data;
+  var _data;
 
   function stackData(data){
     var newData = [],
@@ -15,15 +15,14 @@
       lookup[key]++;
     }
     var bits;
-    for (var key in lookup){
-      // TODO is own property
+    $.each(lookup, function(key, value){
       bits = key.split(':');
       newData.push({
         year_installed: parseInt(bits[0], 10),
         floors: parseInt(bits[1], 10),
-        value: lookup[key]
-      })
-    }
+        value: value
+      });
+  });
     return newData;
   }
 
@@ -76,7 +75,7 @@
         .attr('cx', xCoord)
         .attr('cy', yCoord)
         .attr('stroke-width', 0)
-        .style('fill', function(d){ return color(d.value); })
+        .style('fill', function(d){ return color(d.value); });
 
     var xAxis = d3.svg.axis()
           .scale(x)
@@ -107,12 +106,10 @@
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("floors")
-
+        .text("floors");
   }
 
   $.getJSON('data/', function(response){
-    data = response;
-    console.log(data.length);
-    chart(data);
+    _data = response;
+    chart(_data);
   });
