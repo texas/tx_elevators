@@ -305,16 +305,30 @@
 
 // chart loader
 (function(exports, $){
+  var charts = [];
   $('div.chart').each(function(){
     var $this = $(this),
         ar = 1.618,
         width = $this.width(),
         height = Math.floor(width / ar),
         src = $this.attr('data-src');
+    var options = {
+      ar: ar
+    };
     $this.html(
       '<iframe class="chart" src="' + src +
       '" frameborder="0" scrolling=no width="100%" height="' + height +
       '"</iframe>'
-    );
+    ).data('chartOptions', options);
+    charts.push($this);
+  });
+  $(window).on('resize', function(){
+    $.each(charts, function(i, $this){
+      // TODO add delay
+      var options = $this.data('chartOptions'),
+          width = $this.width(),
+          height = Math.floor(width / options.ar);
+      $this.children('iframe').height(height);
+    });
   });
 })(window, window.jQuery);
