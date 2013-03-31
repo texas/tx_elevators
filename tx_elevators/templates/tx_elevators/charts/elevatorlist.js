@@ -42,7 +42,7 @@
 
     var svg = d3.select('#chart').append('svg')
       .attr('viewBox', [0, 0, width, height].join(" "))
-      .attr('preserveAspectRatio', 'xMinYMinmeet')
+      .attr('preserveAspectRatio', 'xMinYMin meet')
       .attr('width', '100%')
       .attr('height', '100%');
 
