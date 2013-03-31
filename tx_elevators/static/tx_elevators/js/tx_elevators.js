@@ -261,16 +261,34 @@
     return '/building/' + building.elbi + '/';
   };
 
+  var hasMultipleCities = function(buildings){
+    var n = buildings.length, building, first;
+    if (!n) {
+      return;
+    }
+    first = buildings[0].city;
+    n--;
+    while (n){
+      if (buildings[n].city != first) {
+        return true;
+      }
+      n--;
+    }
+    return false;
+  };
+
   var gotPosition = function(position){
     var lat = position.coords.latitude,
         lng = position.coords.longitude;
     var $container = $('#nearest').empty(),
-        buildings = closestBuildings(lat, lng);
+        buildings = closestBuildings(lat, lng),
+        showCity = hasMultipleCities(buildings);
     $.each(buildings, function(idx, building){
       $container.append('<li>' +
         '<a href="' + buildingToUrl(building) + '">' + building.name_1 + '</a> ' +
-        '<span class="pull-right">' + building.address_1 + ', ' +
-        building.city + ' <em>(' + building.distance.toFixed(2) +
+        '<span class="pull-right">' + building.address_1 +
+        (showCity ? ', ' + building.city : '') +
+        ' <em>(' + building.distance.toFixed(2) +
         ' km)</em></span></li>');
     });
 
