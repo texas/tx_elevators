@@ -58,31 +58,35 @@
   };
 
   var prepBinsHtml = function(binArray){
-    var _ = d3.format(",");
+    var _ = d3.format(","),
+        binTitleHTML = function(d){ return '<h4>' + d.name + ' <small>(' + _(d.buildings.length) + ')</small></h4>'; },
+        itemClass = function(d, i) { return 'item' + (i < 10 ? '' : ' overflow'); },
+        itemTitle = function(d){ return d.address_1 + ', ' + d.city + ', TX ' + d.zip_code; },
+        itemText = function(d){ return d.name_1; };
     var binContainer = d3.select('#name'), bins, lists, items;
     bins = binContainer.selectAll('.bin').data(binArray);
     bins
       .attr('class', 'bin span4')
-      .html(function(d){ return '<h4>' + d.name + ' <small>(' + _(d.buildings.length) + ')</small></h4>'; });
+      .html(binTitleHTML);
     bins
       .enter()
         .append('div')
         .attr('class', 'bin span4')
-        .html(function(d){ return '<h4>' + d.name + ' <small>(' + _(d.buildings.length) + ')</small></h4>'; });
+        .html(binTitleHTML);
     bins
       .exit()
         .remove();
     items = bins.selectAll('.item').data(function(d){ return d.buildings; });
     items
-      .attr('class', function(d, i) { return 'item' + (i < 10 ? '' : ' overflow'); })
-      .attr('title', function(d){ return d.address_1 + ' ' + d.city + ', ' + d.zip_code; })
-      .text(function(d){ return d.name_1; });
+      .attr('class', itemClass)
+      .attr('title', itemTitle)
+      .text(itemText);
     items
       .enter()
         .append('div')
-        .attr('class', function(d, i) { return 'item' + (i < 10 ? '' : ' overflow'); })
-        .attr('title', function(d){ return d.address_1 + ' ' + d.city + ', ' + d.zip_code; })
-        .text(function(d){ return d.name_1; })
+        .attr('class', itemClass)
+        .attr('title', itemTitle)
+        .text(itemText)
         .on('click', function(d){
           var url = elbiToUrl(d.elbi);
           if (d3.event.ctrlKey){
