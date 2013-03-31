@@ -309,8 +309,8 @@
             longitude: data.longitude
           }
       });
-    } else {
-      navigator.geolocation.getCurrentPosition(gotPosition);
+    // } else {
+      // navigator.geolocation.getCurrentPosition(gotPosition);
     }
   });
 
