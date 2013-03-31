@@ -6,9 +6,9 @@
 
 
 {% block main %}
-  <ol>
+  <ol class="buildings">
     {% for object in object_list %}
-      <li class="building" data-elbi="{{ object.elbi }}">
+      <li id="elbi-{{ object.elbi }}" class="building" data-elbi="{{ object.elbi }}">
         <a href="{{ object.get_absolute_url }}">{{ object }}</a>
       </li>
     {% endfor %}
@@ -16,7 +16,7 @@
 {% endblock %}
 
 
-{% block extra_scrit %}{{ block.super }}
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{% block extra_script %}{{ block.super }}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.0.8/d3.min.js"></script>
   <script src="{{ STATIC_URL }}tx_elevators/js/search.js"></script>
 {% endblock %}

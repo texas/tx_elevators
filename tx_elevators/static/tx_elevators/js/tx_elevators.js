@@ -281,6 +281,7 @@
   });
 
   $(window).on('storeAvailable', function(){
+    return;
     var data = $('#building-data').data('building');
     if (data && data.latitude){
       gotPosition({
