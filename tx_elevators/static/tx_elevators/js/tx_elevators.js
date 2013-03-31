@@ -128,6 +128,7 @@
           position,
           buildingMarker,
           bounds = new google.maps.LatLngBounds();
+      bounds.extend(center);
       pinColor = "FE7569";
       buildingMarkers.forEach(function(x){ x.setMap(null); });
       buildingMarkers = [];
