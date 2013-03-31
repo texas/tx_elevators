@@ -274,6 +274,7 @@
     var $container = $('#location-container').show(),
         $listContainer = $('#nearest').empty(),
         $well = $listContainer.parent().show(),
+        $mapContainer = $('#nav-map-container'),
         buildings = closestBuildings(lat, lng),
         showCity = hasMultipleCities(buildings);
     $.each(buildings, function(idx, building){
@@ -285,7 +286,13 @@
         ' km)</em></span></li>');
     });
 
-    $('#nav-map-container').height($well.outerHeight());
+    if (!$mapContainer.height()) {
+      // show the first time
+      $mapContainer.height($well.outerHeight());
+    } else {
+      // ease height after that
+      $mapContainer.animate({height: $well.outerHeight()});
+    }
     window.loadMap(position.coords, buildings);
   };
 
