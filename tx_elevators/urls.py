@@ -10,7 +10,8 @@ urlpatterns = patterns('',
         name="home"),
     url(r'^building/$', gzip_page(views.BuildingsList.as_view()),
         name="building_list"),
-    url(r'^building/(?P<elbi>\d+)/$', views.BuildingView.as_view(),
+    url(r'^building/(?P<elbi>\d+)-(?P<slug>[-\w]+)/$',
+        views.BuildingView.as_view(),
         name="building_detail")
 )
 

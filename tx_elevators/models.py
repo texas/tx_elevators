@@ -1,5 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
+# from django.utils.text import slugify
+from django.template.defaultfilters import slugify
 
 
 class Building(models.Model):
@@ -37,7 +39,7 @@ class Building(models.Model):
 
     def get_absolute_url(self):
         return reverse('tx_elevators:building_detail',
-            kwargs={'elbi': self.elbi})
+            kwargs={'elbi': self.elbi, 'slug': slugify(self.name_1)})
 
     def _geocode_prep_lookup(self):
         lookup_bits = []
