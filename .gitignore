@@ -5,6 +5,12 @@ media
 
 # Data files
 data/*.csv
+data/*.orig
+
+
+# Database Dump
+*.dump
+
 
 # Environment variables
 .env
