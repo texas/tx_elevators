@@ -1,3 +1,10 @@
+"""
+Process input csv file.
+
+You may see the same data change every time you run this script. That is because
+there are dirty entries with duplicate primary keys.
+
+"""
 import csv
 import logging
 import sys
