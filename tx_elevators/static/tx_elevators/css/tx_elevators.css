@@ -17,5 +17,6 @@ body > header {
 }
 
 .search .item {
+  cursor: pointer;
   font-size: 0.8em;
 }

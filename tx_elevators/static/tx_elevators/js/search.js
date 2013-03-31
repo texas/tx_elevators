@@ -60,14 +60,6 @@
     bins
       .exit()
         .remove();
-    // lists = bins.selectAll('.list').data(function(d) { return [d]; });
-    // lists
-    //   .enter()
-    //     .append('div')
-    //     .attr('class', 'list');
-    // lists
-    //   .exit()
-    //     .remove();
     items = bins.selectAll('.item').data(function(d){ return d.buildings; });
     items
       .text(function(d){ return d.name_1; })
@@ -77,7 +69,16 @@
         .append('div')
         .attr('class', 'item')
         .text(function(d){ return d.name_1; })
-        .style('display', function(d, i){ return i < 10 ? '' : 'none'; });
+        .style('display', function(d, i){ return i < 10 ? '' : 'none'; })
+        .on('click', function(d){
+          var url = elbiToUrl(d.elbi);
+          if (d3.event.ctrlKey){
+            // TODO detect middle click
+            window.open(url);
+          } else {
+            window.document.location.href = url;
+          }
+        });
     items
       .exit()
         .remove();
@@ -88,7 +89,7 @@
     _data = data;
     prepNameData(data);
 
-    $('#name input').on('keyup', function(){
+    $('#q').on('keyup', function(){
       var needle = this.value.toUpperCase(),
           filtered = _data.filter(function(d){ return d.name_1.indexOf(needle) !== -1; });
       console.log(filtered.length);
