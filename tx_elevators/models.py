@@ -39,7 +39,7 @@ class Building(models.Model):
         return reverse('tx_elevators:building_detail',
             kwargs={'elbi': self.elbi})
 
-    def geocode(self):
+    def _geocode_prep_lookup(self):
         lookup_bits = []
         if self.address_1:
             lookup_bits.append(self.address_1)
@@ -49,9 +49,13 @@ class Building(models.Model):
             lookup_bits.append(self.zip_code)
         if not lookup_bits:
             return
+        lookup = ', '.join(map(str, lookup_bits))
+        return lookup
+
+    def geocode(self):
         from geopydb import geocoders
         g = geocoders.GoogleV3()
-        lookup = ', '.join(map(str, lookup_bits))
+        lookup = self._geocode_prep_lookup()
         __, (lat, lng) = g.geocode(lookup)
         self.latitude = lat
         self.longitude = lng
