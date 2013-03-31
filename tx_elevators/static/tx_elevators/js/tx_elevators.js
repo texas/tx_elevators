@@ -66,6 +66,7 @@
     var mapOptions = {
           zoom: 14,
           mapTypeControl: false,
+          scrollwheel: false,
           streetViewControl: false,
           center: center,
           mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -181,7 +182,6 @@
 
   var storeData = function(data){
     store = data;
-    console.log(store.length);
     exports.store = store;
     $(window).trigger('storeAvailable');
   };
