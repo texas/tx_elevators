@@ -35,8 +35,9 @@ class Command(BaseCommand):
         count = qs.count()
         for i, building in enumerate(qs, start=1):
             if verbosity:
-                print "%6d/%d %d-%s (pk: %d)" % (
-                    i, count, building.elbi, building, building.pk)
+                print ("{0:6}/{1} {2.elbi}-{2} (pk: {2.pk}) "
+                       "(rank: {2.sum_floors})").format(
+                    i, count, building)
             try:
                 building.geocode()
                 time.sleep(wait)
