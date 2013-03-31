@@ -301,4 +301,20 @@
   exports.getClosestBuildings = gotPosition;
 
 })(window, window.jQuery);
-// "76104"
+
+
+// chart loader
+(function(exports, $){
+  $('div.chart').each(function(){
+    var $this = $(this),
+        ar = 1.618,
+        width = $this.width(),
+        height = Math.floor(width / ar),
+        src = $this.attr('data-src');
+    $this.html(
+      '<iframe class="chart" src="' + src +
+      '" frameborder="0" scrolling=no width="100%" height="' + height +
+      '"</iframe>'
+    );
+  });
+})(window, window.jQuery);
