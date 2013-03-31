@@ -158,7 +158,7 @@
                   latitude: newLocation.lat(),
                   longitude: newLocation.lng()
                 }};
-            $.post('/building/' + building.elbi + '/', position, function(data){
+            $.post(building.url, position, function(data){
               console.log(data);
             });
           });
@@ -257,11 +257,6 @@
 
 
   // hook up UI
-  // Get the url for a building based on server-side url pattern
-  var buildingToUrl = function(building){
-    return '/building/' + building.elbi + '/';
-  };
-
   var hasMultipleCities = function(buildings){
     var n = buildings.length, building, first;
     if (!n) {
@@ -286,7 +281,7 @@
         showCity = hasMultipleCities(buildings);
     $.each(buildings, function(idx, building){
       $container.append('<li>' +
-        '<a href="' + buildingToUrl(building) + '">' + building.name_1 + '</a> ' +
+        '<a href="' + building.url + '">' + building.name_1 + '</a> ' +
         '<span class="pull-right">' + building.address_1 +
         (showCity ? ', ' + building.city : '') +
         ' <em>(' + building.distance.toFixed(2) +

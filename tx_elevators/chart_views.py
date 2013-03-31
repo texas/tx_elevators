@@ -51,7 +51,7 @@ class Locator(BaseChart):
     def annotate(self, qs):
         for obj in qs:
             yield {
-                'elbi': obj.elbi,
+                'url': obj.get_absolute_url(),
                 'name_1': obj.name_1,
                 'address_1': obj.address_1,
                 'city': obj.city,
