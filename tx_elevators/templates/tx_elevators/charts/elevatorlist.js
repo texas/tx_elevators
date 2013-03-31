@@ -62,9 +62,12 @@
     y.domain([0, d3.max(data, yAccessor)]).nice();
 
 
+    // colors
+    // colors from colorbrewer diverging scheme
+    var colorExtent = d3.extent(data, vAccessor);
     var color = d3.scale.log()
-          .range(['#aad', '#556'])
-          .domain(d3.extent(data, vAccessor));
+      .range(['rgb(44, 123, 182)', 'rgb(255, 255, 191)', 'rgb(215, 25, 28)'])
+      .domain([colorExtent[0], (1 / 3 * (colorExtent[0] + colorExtent[1])), colorExtent[1]]);
     window.zz = color;
 
     var barWidth = x(x.domain()[0] + 1),  // 1 unit wide
