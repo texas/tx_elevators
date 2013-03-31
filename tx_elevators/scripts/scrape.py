@@ -104,7 +104,14 @@ def process(path):
                 raise
 
 
+def post_process():
+    """Manually clean known bad data."""
+    # guesses
+    Elevator.objects.filter(decal=60678, floors=200).update(floors=10)
+    # Elevator.objects.filter(year_installed__gt=2013).update(year_installed=None)
+
 if __name__ == "__main__":
     logger = logging.getLogger(__name__)
     path = sys.argv[1]
     process(path)
+    post_process()
