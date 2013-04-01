@@ -53,6 +53,7 @@
   });
 })(window.jQuery);
 
+
 // maps
 (function(exports, $){
   "use strict";
@@ -293,12 +294,13 @@
     window.loadMap(position.coords, buildings);
   };
 
-  $('#locate').on('click', function(){
-    navigator.geolocation.getCurrentPosition(gotPosition);
-  });
-
   $.getJSON('/chart/locator/data.json', storeData)
   .success(function(){
+    // enable locate button
+    $('#locate').show('fast').on('click', function(){
+      navigator.geolocation.getCurrentPosition(gotPosition);
+    });
+
     // get position of currently building if on building detail page or user's
     // location.
     var data = $('#building-data').data('building');
