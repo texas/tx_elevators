@@ -46,7 +46,7 @@ dbpush:
 site:
 	python $(PROJECT)/manage.py collectstatic --noinput
 	mkdir -p site
-	cd site && wget -r SITE_URL --force-html -e robots=off -nH -nv \
+	cd site && wget -r $(SITE_URL) --force-html -e robots=off -nH -nv \
 	--max-redirect 0 $(EXCLUDE)
 
 upload:
