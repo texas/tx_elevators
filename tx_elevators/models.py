@@ -54,10 +54,11 @@ class Building(models.Model):
         lookup = ', '.join(map(str, lookup_bits))
         return lookup
 
-    def geocode(self):
+    def geocode(self, lookup=None):
         from geopydb import geocoders
         g = geocoders.GoogleV3()
-        lookup = self._geocode_prep_lookup()
+        if lookup is None:
+            lookup = self._geocode_prep_lookup()
         __, (lat, lng) = g.geocode(lookup)
         self.latitude = lat
         self.longitude = lng
