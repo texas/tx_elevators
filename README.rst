@@ -14,6 +14,14 @@ Using Postgresql instead of Sqlite as your database::
     export DATABASE_URL='postgres:///tx_elevators'
 
 
+Getting Data
+------------
+
+If you don't have a database set up, ``make resetdb`` will create one for you.
+Running ``make scrape`` will download a fresh copy of the CSV and import the
+data. Afterwards, you can run ``manage.py geocode`` to geocode the data.
+
+
 Deploying to Heroku
 -------------------
 
