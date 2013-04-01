@@ -49,8 +49,14 @@ site:
 	cd site && wget -r $(SITE_URL) --force-html -e robots=off -nH -nv \
 	--max-redirect 0 $(EXCLUDE)
 
+# 24340 files uploaded.
+# 3 files skipped.
+#
+# real	200m23.933s
+# user	1m29.810s
+# sys	1m51.935s
 upload:
-	python $(PROJECT)/manage.py sync_s3 --dir site
+	python $(PROJECT)/manage.py sync_s3 --dir site --gzip
 
 serve:
 	cd site && python -m SimpleHTTPServer 8088
