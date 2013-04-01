@@ -118,10 +118,13 @@
         .style("text-anchor", "end")
         .text("floors");
 
-    var $legend = $('<div class="legend"><h3>Info</h3><ul class="content"><li><em>Nothing selected</em></li></ul></div>')
+    var $legend = $('<div class="legend" style="display: none;"><h3>Info</h3><ul class="content"><li><em>Nothing selected</em></li></ul></div>')
       .css({left: margin.left + 20, top: margin.top})
       .appendTo($('#chart')),
         $legendContent = $legend.find('ul.content');
+    if (width >= 600) {
+      $legend.show();
+    }
     function updateLegend(d){
       $legendContent.empty().hide();
       var n = Math.min(d.value, 10),
