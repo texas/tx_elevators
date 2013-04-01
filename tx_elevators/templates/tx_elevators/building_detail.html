@@ -3,7 +3,7 @@
 
 {% block head_title %}{{ object }}{% endblock %}
 {% block page_title %}{{ object }}{% endblock %}
-
+{% block og_title %}{{ object }}{% endblock %}
 
 {% block main %}
   <dl id="building-data" class="dl-horizontal" data-building='{"latitude": {{ object.latitude }}, "longitude": {{ object.longitude }}}'>
