@@ -51,22 +51,36 @@
       And there are {{ past.count }} elevators that were installed before the
       year 100.
 
+    </p>
+    <p>
+      <small>Data current as of 2013-04-01.{# now "Y-m-d" #}</small>
+    </p>
   </section>
 
   <section>
     <h3>Location</h3>
     <p>
 
-      The maps are presented in Google Maps, because they have buildings when
-      you zoom in. Using Google Maps also allowed me to use their geocoder. The
-      data is only partially geocoded. Only {{ geocoded.count|intcomma }} out of
-      {{ buildings.count|intcomma }} buildings have been geocoded and show up
-      the map. And of the geocoded buildings, many have inaccurate locations.
+      The maps are presented in Google Maps because they have buildings when you
+      zoom in. Using Google Maps also allowed me to use their geocoder. The data
+      is only partially geocoded. Only {{ geocoded.count|intcomma }} out of {{
+      buildings.count|intcomma }} buildings have been geocoded and show up the
+      map. And of the geocoded buildings, many have inaccurate locations.
 
     </p>
   </section>
 
-  <p>
-    <small>Data current as of 2013-04-01.{# now "Y-m-d" #}</small>
-  </p>
+  <section>
+    <h3>Code</h3>
+    <p>
+
+      The code for this site is available under an open source license at
+      <a href="https://github.com/texastribune/tx_elevators" target="_blank">GitHub</a>.
+      It was coded over a few nights and most of a
+      <a href="https://github.com/texastribune/tx_elevators/graphs/punch-card" target="_blank">weekend</a>
+      by a programmer from
+      <a href="http://www.texastribune.org/about/staff/" target="_blank">The Texas Tribune</a>.
+
+    </p>
+  </section>
 {% endblock %}
