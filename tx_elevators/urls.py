@@ -12,7 +12,9 @@ urlpatterns = patterns('',
         name="building_list"),
     url(r'^building/(?P<elbi>\d+)-(?P<slug>[-\w]+)/$',
         views.BuildingView.as_view(),
-        name="building_detail")
+        name="building_detail"),
+    url(r'^about/$', views.About.as_view(),
+        name='about'),
 )
 
 

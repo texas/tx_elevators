@@ -1,0 +1,40 @@
+{% extends "tx_elevators/layouts/base.html" %}
+{% load humanize %}
+
+{% block head_title %}About{% endblock %}
+{% block page_title %}About{% endblock %}
+
+
+{% block main %}
+  <section>
+    <h3>The Data</h3>
+    <p>
+      Elevator data is available courtesy the Texas Department of Licensing and
+      Regulation. To learn more about the data and download the original, visit
+      the
+
+      <a href="https://www.license.state.tx.us/ElevatorSearch/HelpPage.asp#data" target="_blank">
+        elevator search help page
+      </a>.
+    </p>
+    <p>
+
+      The data isn't perfect. For example, there are {{ future.count|apnumber }}
+      elevators listed as being installed after {% now "Y" %}:
+
+      {% for elevator in future %}
+        {% if not forloop.last %}
+          <a href="{{ elevator.building.get_absolute_url }}">{{ elevator }}</a>.
+        {% else %}
+          and <a href="{{ elevator.building.get_absolute_url }}">{{ elevator }}</a>
+        {% endif %}
+      {% endfor %}
+
+      And there are {{ past.count }} elevators that were installed before the
+      year 100.
+
+  </section>
+  <p>
+    <small>Data current as of 2013-04-01.{# now "Y-m-d" #}</small>
+  </p>
+{% endblock %}
