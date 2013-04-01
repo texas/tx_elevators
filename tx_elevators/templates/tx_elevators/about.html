@@ -7,6 +7,24 @@
 
 {% block main %}
   <section>
+    <h3>Stats at a Glance</h3>
+    <dl class="dl-horizontal">
+      <dt>Buildings</dt>
+      <dd>{{ buildings.count|intcomma }}</dd>
+      <dt>Total Elevators</dt>
+      <dd>{{ elevators.count|intcomma }}</dd>
+      <dt>Passenger Elevators</dt>
+      <dd>{{ passenger_elevators.count|intcomma }}</dd>
+      <dt>Freight Elevators</dt>
+      <dd>{{ freight_elevators.count|intcomma }}</dd>
+      <dt>Escalators</dt>
+      <dd>{{ escalators.count|intcomma }}</dd>
+      <dt>Moving Sidewalks</dt>
+      <dd>{{ moving_sidewalks.count|intcomma }}</dd>
+    </dl>
+  </section>
+
+  <section>
     <h3>The Data</h3>
     <p>
       Elevator data is available courtesy the Texas Department of Licensing and
