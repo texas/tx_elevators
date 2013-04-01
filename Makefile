@@ -1,10 +1,14 @@
 PROJECT=./example_project
+SITE_URL=localhost:8000
 
 help:
 	@echo "make commands:"
 	@echo "  make help    - this help"
 	@echo "  make test    - run test suite"
 	@echo "  make resetdb - drop and recreate the database"
+	@echo "  make site    - spider $(SITE_URL) and save pages locally"
+	@echo "  make upload  - sync spidered pages to S3"
+	@echo "  make serve   - serve the spided pages locally (on port 8088)"
 
 
 test:
@@ -41,7 +45,7 @@ dbpush:
 site:
 	python $(PROJECT)/manage.py collectstatic --noinput
 	mkdir -p site
-	cd site && wget -r localhost:8000 --force-html -e robots=off -nH -nv \
+	cd site && wget -r SITE_URL --force-html -e robots=off -nH -nv \
 	--max-redirect 0 $(EXCLUDE)
 
 upload:

@@ -39,3 +39,15 @@ Migrate data from your local Postgresql to Heroku (https://devcenter.heroku.com/
 Upload ``tx_elevators.dump`` someplace on the Internets and pull it into Heroku::
 
     $ heroku pgbackups:restore DATABASE http://example.com/tx_elevators.dump
+
+
+Deploying to S3
+---------------
+
+Partial instructions for deploying to a `hosted site on S3`_):
+
+1. Make sure you're not in debug mode.
+2. Make sure this project is running locally on ``http://localhost:8000``.
+3. Run ``make site upload``
+
+.. _hosted site on S3: http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html
