@@ -33,13 +33,18 @@ dbpush:
 	rm tx_elevators.dump
 
 
+# FINISHED --2013-04-01 00:10:54--
+# Total wall clock time: 43m 29s
+# Downloaded: 24343 files, 92M in 5.3s (17.3 MB/s)
+#
+# EXCLUDE = --exclude-directories=building/*
 site:
 	mkdir -p site
 	cd site && wget -r localhost:8000 --force-html -e robots=off S -nH -nv \
-	--max-redirect 0 --exclude-directories=building/*
+	--max-redirect 0 $(EXCLUDE)
 
 upload:
-	python $(PROJECT)/manage.py s3_sync --dir site
+	python $(PROJECT)/manage.py sync_s3 --dir site
 
 serve:
 	cd site && python -m SimpleHTTPServer 8088
