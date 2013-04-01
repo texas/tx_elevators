@@ -112,7 +112,7 @@
   };
 
   var init = function(data){
-    window.data = data; // DEBUG
+    $('#name').removeClass('loading');
     _data = data;
 
     var $methods = $('#search-container ul.nav > li');
