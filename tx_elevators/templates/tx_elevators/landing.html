@@ -22,7 +22,8 @@
   <ol>
     {% for elevator in oldest_elevators %}
       <li><a href="{{ elevator.building.get_absolute_url }}">
-        {{ elevator.building }}</a>, installed in {{ elevator.year_installed }}
+        {{ elevator.building }}</a>
+        &ndash; installed in {{ elevator.year_installed }}
       </li>
     {% endfor %}
   </ol>

@@ -73,7 +73,7 @@
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
     map = new google.maps.Map($container[0], mapOptions);
-    $('<button type="button" class="btn"><i class="icon-screenshot"></i> Re-do Search in Map</button>')
+    $('<button type="button" class="btn"><i class="icon-screenshot"></i> Redo Search in Map</button>')
       .click(function(){
         var center = map.getCenter(),
             position = {coords:{

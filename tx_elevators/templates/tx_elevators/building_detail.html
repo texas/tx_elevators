@@ -8,7 +8,7 @@
 {% block main %}
   <dl id="building-data" class="dl-horizontal" data-building='{"latitude": {{ object.latitude }}, "longitude": {{ object.longitude }}}'>
     <dt>Building Number</dt>
-    <dd>{{ object.elbi }}</dd>
+    <dd>ELBI-{{ object.elbi }}</dd>
     <dt>Name</dt>
     <dd>
       {{ object.name_1 }}
@@ -24,18 +24,14 @@
     <dd>{{ object.owner }}</dd>
     <dt>Contact</dt>
     <dd>{{ object.contact }}</dd>
-    {% if object.latitude %}
-      <dt>Location</dt>
-      <dd>{{ object.latitude }}, {{ object.longitude }}</dd>
-    {% endif %}
   </dl>
 
   <h2>Elevators</h2>
   <table class="table table-condensed table-hover">
     <thead>
       <tr>
-        <th>Equipment Identification Number</th>
-        <th>Date of Last Certified Inspection</th>
+        <th>Equipment ID</th>
+        <th>Last Certified Inspection</th>
         <th>Equipment Type</th>
         <th>Drive Type</th>
         <th>Floors</th>
