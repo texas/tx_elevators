@@ -6,6 +6,9 @@
     <title>{% block head_title %}{% endblock %}</title>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}tx_elevators/css/tx_elevators.css" rel="stylesheet">
+    <meta property="og:title" content="Elevator Explorer: How Texans are Raised">
+    <meta property="og:image" content="http://s3.amazonaws.com/static.texastribune.org/media/images/2013/03/31/elevator_jpg_474x1000_q100.jpg">
+    <meta property="og:description" content="Find the nearest elevator to you and explore almost 50,000 elevators throughout Texas.">
   </head>
   <body{% if debug %} data-debug="1"{% endif %} class="{% block body_class %}{% endblock %}">
     <div class="navbar navbar-inverse">
