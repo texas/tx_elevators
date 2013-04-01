@@ -59,8 +59,13 @@ class About(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(About, self).get_context_data(**kwargs)
         # in order of appearance
-        context['future'] = Elevator.objects.filter(year_installed__gt=2013).\
+        buildings = Building.objects.all()
+        elevators = Elevator.objects.all()
+        # context['elevators'] = elevators
+        context['future'] = elevators.filter(year_installed__gt=2013).\
             select_related('building').order_by('year_installed')
-        context['past'] = Elevator.objects.filter(year_installed__lt=1000).\
+        context['past'] = elevators.filter(year_installed__lt=1000).\
             select_related('building').order_by('year_installed')
+        context['buildings'] = buildings
+        context['geocoded'] = buildings.filter(latitude__isnull=False)
         return context
