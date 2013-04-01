@@ -39,8 +39,9 @@ dbpush:
 #
 # EXCLUDE = --exclude-directories=building/*
 site:
+	python $(PROJECT)/manage.py collectstatic --noinput
 	mkdir -p site
-	cd site && wget -r localhost:8000 --force-html -e robots=off S -nH -nv \
+	cd site && wget -r localhost:8000 --force-html -e robots=off -nH -nv \
 	--max-redirect 0 $(EXCLUDE)
 
 upload:
