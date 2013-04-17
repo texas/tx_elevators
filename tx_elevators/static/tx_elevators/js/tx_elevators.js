@@ -231,7 +231,11 @@
           y = lat2 - lat1;
       return Math.sqrt(x * x + y * y) * distance.R;
     },
-    magic: function(lat1, lng1, lat2, lng2){
+    taxicab: function(lat1, lng1, lat2, lng2){
+      lat1 = lat1.toRad();
+      lng1 = lng1.toRad();
+      lat2 = lat2.toRad();
+      lng2 = lng2.toRad();
       return (Math.abs(lat1 - lat2) + Math.abs(lng1 - lng2)) * distance.R;
     }
   };
