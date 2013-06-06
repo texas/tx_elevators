@@ -2,6 +2,7 @@
 import os
 
 import dj_database_url
+from project_runpy.tim import env
 
 
 def project_dir(*paths):
@@ -10,7 +11,7 @@ def project_dir(*paths):
 
 
 # default to DEBUG=True
-DEBUG = os.environ.get('ENVIRONMENT', 'dev') == 'dev'
+DEBUG = env.get('DEBUG', True, force_bool=True)
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -146,7 +147,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     # Log everything
     'root': {
-        'level': 'DEBUG',
+        'level': env.get('LOGGING', 'DEBUG'),
         'handlers': ['console'],
     },
     'filters': {
