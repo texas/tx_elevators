@@ -9,3 +9,6 @@ ipdb
 ipdbplugin
 factory-boy
 geopy>=0.95.1
+
+# warning: this is alpha
+project_runpy
