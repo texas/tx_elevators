@@ -42,12 +42,8 @@ dbpush:
 # Total wall clock time: 43m 29s
 # Downloaded: 24343 files, 92M in 5.3s (17.3 MB/s)
 #
-# EXCLUDE = --exclude-directories=building/*
 site:
-	python $(PROJECT)/manage.py collectstatic --noinput
-	mkdir -p site
-	cd site && wget -r $(SITE_URL) --force-html -e robots=off -nH -nv \
-	--max-redirect 0 $(EXCLUDE)
+	bin/download_site.sh
 
 # 24340 files uploaded.
 # 3 files skipped.
@@ -56,7 +52,7 @@ site:
 # user	1m29.810s
 # sys	1m51.935s
 upload:
-	python $(PROJECT)/manage.py sync_s3 --dir site --gzip
+	LOGGING=WARN python $(PROJECT)/manage.py sync_s3 --dir site --gzip
 
 serve:
 	cd site && python -m SimpleHTTPServer 8088
