@@ -9,7 +9,7 @@ from .models import Building, Elevator
 class BaseChart(TemplateView):
     """Render a chart and supply its data."""
     def get(self, request, **kwargs):
-        if 'data' in kwargs:
+        if kwargs.get('data'):
             data = self.get_data(request, **kwargs)
             content = json.dumps(data)
             return HttpResponse(content, content_type='application/json')

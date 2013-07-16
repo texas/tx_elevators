@@ -20,9 +20,8 @@ urlpatterns = patterns('',
 
 # chart url patterns
 chartpatterns = patterns('',
-    url(r'^elevatorlist/$', chart_views.ElevatorList.as_view()),
-    url(r'^elevatorlist/data.json$', gzip_page(chart_views.ElevatorList.as_view()),
-        {'data': True}),
+    url(r'^elevatorlist/(?P<data>data.json)?$',
+            gzip_page(chart_views.ElevatorList.as_view())),
     url(r'^locator/data.json$', gzip_page(chart_views.Locator.as_view()),
         {'data': True}),
     url(r'^search/data.json$', gzip_page(chart_views.Search.as_view()),
