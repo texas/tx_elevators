@@ -8,6 +8,8 @@ from .models import Building, Elevator
 
 class BaseChart(TemplateView):
     """Render a chart and supply its data."""
+    template_name = 'tx_elevators/blank.html'
+
     def get(self, request, **kwargs):
         if kwargs.get('data'):
             data = self.get_data(request, **kwargs)
@@ -46,8 +48,6 @@ class ElevatorList(BaseChart):
 
 
 class Locator(BaseChart):
-    template_name = "TODO"  # TODO
-
     def annotate(self, qs):
         for obj in qs:
             yield {
@@ -66,8 +66,6 @@ class Locator(BaseChart):
 
 
 class Search(BaseChart):
-    template_name = "TODO"  # TODO
-
     def get_data(self, request, **kwargs):
         queryset = Building.objects.all()
         context = list(queryset.values(
