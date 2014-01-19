@@ -26,7 +26,7 @@ class ElevatorList(BaseChart):
         queryset = Elevator.objects.filter(
             floors__gt=0,
             year_installed__gte=1913,
-            year_installed__lte=2013,
+            year_installed__lte=2014,
         ).select_related('building')
         queryset = queryset.exclude(equipment_type__in=[
             'ESCALATOR',
