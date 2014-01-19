@@ -1,6 +1,6 @@
 import json
 
-from django.db.models import Sum
+from django.db.models import Max, Sum
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 
@@ -53,7 +53,7 @@ class Locator(BaseChart):
         for obj in qs:
             yield {
                 'url': obj.get_absolute_url(),
-                'name_1': obj.name_1,
+                'name_1': '{0} ({0.max_floors})'.format(obj),
                 'address_1': obj.address_1,
                 'city': obj.city,
                 'latitude': obj.latitude,
@@ -62,7 +62,10 @@ class Locator(BaseChart):
 
     def get_data(self, request, **kwargs):
         queryset = (Building.objects.exclude(latitude=None)
-            .annotate(sum_floors=Sum('elevator__floors'))
+            .annotate(
+                sum_floors=Sum('elevator__floors'),
+                max_floors=Max('elevator__floors'),
+            )
             .filter(sum_floors__gt=0)
         )
         context = list(self.annotate(queryset))
