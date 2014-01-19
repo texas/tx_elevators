@@ -47,8 +47,6 @@ class Building(models.Model):
             lookup_bits.append(self.address_1)
         if self.city:
             lookup_bits.append(self.city)
-        if self.zip_code:
-            lookup_bits.append(self.zip_code)
         if not lookup_bits:
             return
         lookup = ', '.join(map(str, lookup_bits))
@@ -60,7 +58,11 @@ class Building(models.Model):
         g = geocoders.GoogleV3()
         if lookup is None:
             lookup = self._geocode_prep_lookup()
-        __, (lat, lng) = g.geocode(lookup, exactly_one=True)
+        __, (lat, lng) = g.geocode(lookup, exactly_one=True,
+            components=dict(
+                postal_code=self.zip_code,
+            ),
+        )
         self.latitude = lat
         self.longitude = lng
         self.save()
