@@ -2,7 +2,7 @@
 import os
 
 import dj_database_url
-from project_runpy.tim import env
+from project_runpy import env
 
 
 def project_dir(*paths):
@@ -11,7 +11,7 @@ def project_dir(*paths):
 
 
 # default to DEBUG=True
-DEBUG = env.get('DEBUG', True, force_bool=True)
+DEBUG = env.get('DEBUG', True)
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -100,10 +100,10 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
+    # 'django.contrib.sessions.middleware.SessionMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # 'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
