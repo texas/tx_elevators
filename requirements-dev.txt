@@ -8,7 +8,7 @@ ipython
 ipdb
 ipdbplugin
 factory-boy
-geopy>=0.95.1
+geopy==0.97
 
 # warning: this is alpha
 project_runpy
