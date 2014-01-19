@@ -20,7 +20,7 @@ if __name__ == "__main__":
     old_entries = 0
 
     for building in qs:
-        key = building._geocode_prep_lookup()
+        key = building.get_geo_query()
         value = store.get(key, None)
         if value is None:
             new_entries += 1

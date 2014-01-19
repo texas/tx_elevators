@@ -41,7 +41,7 @@ class Building(models.Model):
         return reverse('tx_elevators:building_detail',
             kwargs={'elbi': self.elbi, 'slug': slugify(self.name_1)})
 
-    def _geocode_prep_lookup(self):
+    def get_geo_query(self):
         lookup_bits = []
         if self.address_1:
             lookup_bits.append(self.address_1)
@@ -56,9 +56,7 @@ class Building(models.Model):
         """Geocode this building."""
         from geopydb import geocoders
         g = geocoders.GoogleV3()
-        if lookup is None:
-            lookup = self._geocode_prep_lookup()
-        __, (lat, lng) = g.geocode(lookup, exactly_one=True,
+        __, (lat, lng) = g.geocode(self.get_geo_query(), exactly_one=True,
             components=dict(
                 postal_code=self.zip_code,
             ),
