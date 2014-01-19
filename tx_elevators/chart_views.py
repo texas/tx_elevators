@@ -1,5 +1,6 @@
 import json
 
+from django.db.models import Sum
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 
@@ -60,7 +61,10 @@ class Locator(BaseChart):
             }
 
     def get_data(self, request, **kwargs):
-        queryset = Building.objects.exclude(latitude=None)
+        queryset = (Building.objects.exclude(latitude=None)
+            .annotate(sum_floors=Sum('elevator__floors'))
+            .filter(sum_floors__gt=0)
+        )
         context = list(self.annotate(queryset))
         return context
 
