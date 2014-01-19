@@ -56,6 +56,7 @@ class Building(models.Model):
         """Geocode this building."""
         from geopydb import geocoders
         g = geocoders.GoogleV3()
+        # XXX the zip code is wrong sometimes
         __, (lat, lng) = g.geocode(self.get_geo_query(), exactly_one=True,
             components=dict(
                 postal_code=self.zip_code,
