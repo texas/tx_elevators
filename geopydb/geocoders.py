@@ -34,7 +34,7 @@ class GoogleV3(object):
                     value=key,
                 ))
                 return value_raw
-            except (ValueError, geocoders.base.GeocoderResultError) as e:
+            except (ValueError, ) as e:
                 value = str(e)
                 store[key] = value
                 store.close()
