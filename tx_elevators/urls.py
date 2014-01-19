@@ -15,19 +15,14 @@ urlpatterns = patterns('',
         name="building_detail"),
     url(r'^about/$', views.About.as_view(),
         name='about'),
-)
 
-
-# chart url patterns
-chartpatterns = patterns('',
-    url(r'^elevatorlist/(?P<data>data.json)?$',
-            gzip_page(chart_views.ElevatorList.as_view())),
-    url(r'^locator/data.json$', gzip_page(chart_views.Locator.as_view()),
-        {'data': True}),
-    url(r'^search/data.json$', gzip_page(chart_views.Search.as_view()),
-        {'data': True}),
-)
-
-urlpatterns += patterns('',
-    url(r'^chart/', include(chartpatterns)),
+    # chart url patterns
+    url(r'^chart/', include(patterns('',
+        url(r'^elevatorlist/(?P<data>data.json)?$',
+                gzip_page(chart_views.ElevatorList.as_view())),
+        url(r'^locator/(?P<data>data.json)?$',
+                gzip_page(chart_views.Locator.as_view())),
+        url(r'^search/(?P<data>data.json)?$',
+                gzip_page(chart_views.Search.as_view())),
+    ))),
 )

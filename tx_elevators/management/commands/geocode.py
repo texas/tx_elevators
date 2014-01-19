@@ -19,10 +19,14 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        import logging
         import time
+
         from django.db.models import Sum
         from tx_elevators.models import Building
-        from geopy.geocoders.googlev3 import GQueryError
+        from geopy.geocoders.googlev3 import GeocoderQueryError
+
+        logger = logging.getLogger(__name__)
 
         verbosity = int(options['verbosity'])  # default: 1
         count = options['count']
@@ -43,7 +47,8 @@ class Command(BaseCommand):
                 time.sleep(wait)
             except KeyboardInterrupt:
                 exit(1)
-            except (ValueError, GQueryError):
+            except (ValueError, TypeError, GeocoderQueryError) as e:
                 # ignore bad address ValueError
-                # ignore no address GQueryError
-                pass
+                # ignore geocode lookup failed TypeError
+                # ignore no address GeocoderQueryError
+                logger.error('Geocode Lookup Failed: {}'.format(e))

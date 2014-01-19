@@ -1,5 +1,6 @@
 import json
 
+from django.db.models import Max, Sum
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 
@@ -8,6 +9,8 @@ from .models import Building, Elevator
 
 class BaseChart(TemplateView):
     """Render a chart and supply its data."""
+    template_name = 'tx_elevators/blank.html'
+
     def get(self, request, **kwargs):
         if kwargs.get('data'):
             data = self.get_data(request, **kwargs)
@@ -24,7 +27,7 @@ class ElevatorList(BaseChart):
         queryset = Elevator.objects.filter(
             floors__gt=0,
             year_installed__gte=1913,
-            year_installed__lte=2013,
+            year_installed__lte=2014,
         ).select_related('building')
         queryset = queryset.exclude(equipment_type__in=[
             'ESCALATOR',
@@ -46,13 +49,11 @@ class ElevatorList(BaseChart):
 
 
 class Locator(BaseChart):
-    template_name = "TODO"  # TODO
-
     def annotate(self, qs):
         for obj in qs:
             yield {
                 'url': obj.get_absolute_url(),
-                'name_1': obj.name_1,
+                'name_1': '{0} ({0.max_floors})'.format(obj),
                 'address_1': obj.address_1,
                 'city': obj.city,
                 'latitude': obj.latitude,
@@ -60,14 +61,18 @@ class Locator(BaseChart):
             }
 
     def get_data(self, request, **kwargs):
-        queryset = Building.objects.exclude(latitude=None)
+        queryset = (Building.objects.exclude(latitude=None)
+            .annotate(
+                sum_floors=Sum('elevator__floors'),
+                max_floors=Max('elevator__floors'),
+            )
+            .filter(sum_floors__gt=0)
+        )
         context = list(self.annotate(queryset))
         return context
 
 
 class Search(BaseChart):
-    template_name = "TODO"  # TODO
-
     def get_data(self, request, **kwargs):
         queryset = Building.objects.all()
         context = list(queryset.values(

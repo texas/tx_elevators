@@ -1,14 +1,14 @@
 -r requirements.txt
 
-Werkzeug>=0.8.3
+boto==2.23.0
+# geopy==0.97
+https://github.com/crccheck/geopy/tarball/add-goog-components
 django-debug-toolbar>=0.9
 django-extensions>=0.9
 django-nose
-ipython
+factory-boy
 ipdb
 ipdbplugin
-factory-boy
-geopy>=0.95.1
-
-# warning: this is alpha
+ipython
 project_runpy
+Werkzeug>=0.8.3
