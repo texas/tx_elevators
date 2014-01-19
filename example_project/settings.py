@@ -88,6 +88,13 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+
+# AWS to upload to S3
+AWS_ACCESS_KEY_ID = env.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env.get('AWS_SECRET_ACCESS_KEY')
+AWS_BUCKET_NAME = env.get('AWS_BUCKET_NAME')
+
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'lolimasekrit'
 
