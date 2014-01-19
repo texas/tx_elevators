@@ -55,11 +55,12 @@ class Building(models.Model):
         return lookup
 
     def geocode(self, lookup=None):
+        """Geocode this building."""
         from geopydb import geocoders
         g = geocoders.GoogleV3()
         if lookup is None:
             lookup = self._geocode_prep_lookup()
-        __, (lat, lng) = g.geocode(lookup)
+        __, (lat, lng) = g.geocode(lookup, exactly_one=True)
         self.latitude = lat
         self.longitude = lng
         self.save()

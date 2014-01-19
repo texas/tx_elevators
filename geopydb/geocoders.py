@@ -10,13 +10,13 @@ class GoogleV3(object):
     def __init__(self, *args, **kwargs):
         self.geocoder = geocoders.GoogleV3(*args, **kwargs)
 
-    def geocode(self, address):
-        key = address
+    def geocode(self, query, **kwargs):
+        key = query
         store = anydbm.open('GoogleV3_cache', 'c')
         value = store.get(key, None)
         if value is None:
             try:
-                value_raw = self.geocoder.geocode(address)
+                value_raw = self.geocoder.geocode(query, **kwargs)
                 value = json.dumps(value_raw)
                 store[key] = value
                 store.close()
