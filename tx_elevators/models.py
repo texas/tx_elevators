@@ -53,7 +53,12 @@ class Building(models.Model):
         return lookup
 
     def geocode(self, lookup=None):
-        """Geocode this building."""
+        """
+        Geocode this building.
+
+        Latitudes should be between 25 50' and 36 30'
+        Longitude should be between -93 31' and -106 39'
+        """
         from geopydb import geocoders
         g = geocoders.GoogleV3()
         # XXX the zip code is wrong sometimes
