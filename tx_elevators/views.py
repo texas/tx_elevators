@@ -70,7 +70,7 @@ class About(TemplateView):
         context['moving_sidewalks'] = elevators.filter(
             equipment_type='MOVING SIDEWALK')
         context['escalators'] = elevators.filter(equipment_type='ESCALATOR')
-        context['future'] = elevators.filter(year_installed__gt=2013).\
+        context['future'] = elevators.filter(year_installed__gt=2014).\
             select_related('building').order_by('year_installed')
         context['past'] = elevators.filter(year_installed__lt=1000).\
             select_related('building').order_by('year_installed')
