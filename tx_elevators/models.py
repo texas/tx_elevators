@@ -52,7 +52,7 @@ class Building(models.Model):
         lookup = ', '.join(map(str, lookup_bits))
         return lookup
 
-    def geocode(self, lookup=None):
+    def geocode(self, lookup=None, force=False):
         """
         Geocode this building.
 
@@ -66,10 +66,21 @@ class Building(models.Model):
             components=dict(
                 postal_code=self.zip_code,
             ),
+            force=force,
         )
         self.latitude = lat
         self.longitude = lng
         self.save()
+
+    def ungeocode(self):
+        """
+        Mark this geocode as wrong.
+        """
+        buildings = Building.objects.filter(latitude=self.latitude,
+            longitude=self.longitude)
+        buildings.update(latitude=None, longitude=None)
+        for building in buildings:
+            building.geocode(force=True)
 
 
 class ElevatorManager(models.Manager):
