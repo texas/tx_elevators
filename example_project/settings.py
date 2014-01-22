@@ -159,8 +159,11 @@ LOGGING = {
     },
     'filters': {
         'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
     },
     'handlers': {
         'mail_admins': {
@@ -174,11 +177,9 @@ LOGGING = {
         },
     },
     'loggers': {
-        # Keep logs from filling up with sql
         'django.db.backends': {
-            'level': 'ERROR',
+            'filters': ['require_debug_true'],
             'handlers': ['console'],
-            'propagate': True,
         },
         'django.request': {
             'handlers': ['mail_admins'],
