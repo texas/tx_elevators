@@ -70,8 +70,8 @@
     <script src="{{ STATIC_URL }}js/modernizr.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
+    <a class="prefetch-hint" href="{% url 'tx_elevators:chart:locator' %}data.json" rel="nofollow" style="display: none;"></a>
     <script src="{{ STATIC_URL }}tx_elevators/js/tx_elevators.js"></script>
     {% block extra_script %}{% endblock %}
-    <a class="prefetch-hint" href="{% url 'tx_elevators:chart:elevatorlist' %}data.json" rel="nofollow" style="display: none;"></a>
   </body>
 </html>

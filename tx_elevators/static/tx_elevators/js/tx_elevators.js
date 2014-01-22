@@ -298,7 +298,8 @@
     window.loadMap(position.coords, buildings);
   };
 
-  $.getJSON('/chart/locator/data.json', storeData)
+  var url = $('script:last').prev('a').attr('href');
+  $.getJSON(url, storeData)
   .success(function(){
     // enable locate button
     $('#locate').show('fast').on('click', function(){
