@@ -164,6 +164,9 @@ LOGGING = {
         'require_debug_true': {
             '()': 'django.utils.log.RequireDebugTrue',
         },
+        'readable_sql': {
+            '()': 'project_runpy.ReadableSqlFilter',
+        },
     },
     'handlers': {
         'mail_admins': {
@@ -178,8 +181,7 @@ LOGGING = {
     },
     'loggers': {
         'django.db.backends': {
-            'filters': ['require_debug_true'],
-            'handlers': ['console'],
+            'filters': ['require_debug_true', 'readable_sql'],
         },
         'django.request': {
             'handlers': ['mail_admins'],
