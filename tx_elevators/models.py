@@ -72,14 +72,22 @@ class Building(models.Model):
         self.longitude = lng
         self.save()
 
+    def neighbors(self, d=0.001):
+        """
+        Get neighboring buildings.
+
+        Defaults to a very tiny radius.
+        """
+        return Building.objects.filter(
+            latitude__range=(self.latitude - d, self.latitude + d),
+            longitude__range=(self.longitude - d, self.longitude + d),
+        )
+
     def ungeocode(self):
         """
         Mark this geocode as wrong.
         """
-        buildings = Building.objects.filter(latitude=self.latitude,
-            longitude=self.longitude)
-        buildings.update(latitude=None, longitude=None)
-        for building in buildings:
+        for building in self.neighbors():
             building.geocode(force=True)
 
 
