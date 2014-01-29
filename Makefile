@@ -52,7 +52,7 @@ site:
 # user	1m29.810s
 # sys	1m51.935s
 upload:
-	LOGGING=WARN python $(PROJECT)/manage.py sync_s3 --dir site --gzip
+	LOGGING=WARN DEBUG=0 python $(PROJECT)/manage.py sync_s3 --dir site --gzip
 
 serve:
 	cd site && python -m SimpleHTTPServer 8088
