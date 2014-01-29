@@ -138,6 +138,7 @@
       $('#name div.bin').toggleClass('show-all');
     });
   };
-  $.getJSON('/chart/search/data.json', init);
+  var url = $('script:last').prev('a').attr('href');
+  $.getJSON(url, init);
 
 })(window, window.jQuery);

@@ -40,6 +40,6 @@
 
 {% block extra_script %}{{ block.super }}
   <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.0.8/d3.min.js"></script>
+  <a class="prefetch-hint" href="{% url 'tx_elevators:chart:search' %}data.json" rel="nofollow" style="display: none;"></a>
   <script src="{{ STATIC_URL }}tx_elevators/js/search.js"></script>
-  <a class="prefetch-hint" href="/chart/search/data.json" rel="nofollow" style="display: none;"></a>
 {% endblock %}

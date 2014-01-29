@@ -10,5 +10,4 @@ factory-boy
 ipdb
 ipdbplugin
 ipython
-project_runpy
 Werkzeug>=0.8.3

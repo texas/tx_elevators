@@ -52,8 +52,13 @@ class Building(models.Model):
         lookup = ', '.join(map(str, lookup_bits))
         return lookup
 
-    def geocode(self, lookup=None):
-        """Geocode this building."""
+    def geocode(self, lookup=None, force=False):
+        """
+        Geocode this building.
+
+        Latitudes should be between 25 50' and 36 30'
+        Longitude should be between -93 31' and -106 39'
+        """
         from geopydb import geocoders
         g = geocoders.GoogleV3()
         # XXX the zip code is wrong sometimes
@@ -61,10 +66,29 @@ class Building(models.Model):
             components=dict(
                 postal_code=self.zip_code,
             ),
+            force=force,
         )
         self.latitude = lat
         self.longitude = lng
         self.save()
+
+    def neighbors(self, d=0.001):
+        """
+        Get neighboring buildings.
+
+        Defaults to a very tiny radius.
+        """
+        return Building.objects.filter(
+            latitude__range=(self.latitude - d, self.latitude + d),
+            longitude__range=(self.longitude - d, self.longitude + d),
+        )
+
+    def ungeocode(self):
+        """
+        Mark this geocode as wrong.
+        """
+        for building in self.neighbors():
+            building.geocode(force=True)
 
 
 class ElevatorManager(models.Manager):

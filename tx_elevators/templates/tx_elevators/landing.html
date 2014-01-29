@@ -43,11 +43,11 @@
 
 <section>
   <h2>Distribution of Age and Floors of Elevators</h2>
-  <div class="chart" data-src="/chart/elevatorlist/">
+  <div class="chart" data-src="{% url 'tx_elevators:chart:elevatorlist' %}">
     <noscript>
       Missing Figure
     </noscript>
   </div>
-  <a class="prefetch-hint" href="/chart/elevatorlist/" rel="nofollow" style="display: none;"></a>
+  <a class="prefetch-hint" href="{% url 'tx_elevators:chart:elevatorlist' %}" rel="nofollow" style="display: none;"></a>
 </section>
 {% endblock %}

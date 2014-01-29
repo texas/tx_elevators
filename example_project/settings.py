@@ -159,8 +159,14 @@ LOGGING = {
     },
     'filters': {
         'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'readable_sql': {
+            '()': 'project_runpy.ReadableSqlFilter',
+        },
     },
     'handlers': {
         'mail_admins': {
@@ -170,15 +176,12 @@ LOGGING = {
         },
         'console': {
             'level': 'DEBUG',
-            'class': 'example_project.logging_handlers.ColorizingStreamHandler',
+            'class': 'project_runpy.ColorizingStreamHandler',
         },
     },
     'loggers': {
-        # Keep logs from filling up with sql
         'django.db.backends': {
-            'level': 'ERROR',
-            'handlers': ['console'],
-            'propagate': True,
+            'filters': ['require_debug_true', 'readable_sql'],
         },
         'django.request': {
             'handlers': ['mail_admins'],

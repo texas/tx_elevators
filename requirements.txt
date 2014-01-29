@@ -1,5 +1,6 @@
 Django==1.5.5
 
 dj-database-url>=0.2.1
+project_runpy
 psycopg2>=2.4.5
 gunicorn==0.17.2
