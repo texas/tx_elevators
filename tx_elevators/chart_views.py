@@ -53,7 +53,7 @@ class Locator(BaseChart):
         for obj in qs:
             yield {
                 'url': obj.get_absolute_url(),
-                'name_1': '{0} ({0.max_floors})'.format(obj),
+                'name_1': '{0.name_1} ({0.max_floors})'.format(obj),
                 'address_1': obj.address_1,
                 'city': obj.city,
                 'latitude': obj.latitude,
