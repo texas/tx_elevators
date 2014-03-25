@@ -62,7 +62,7 @@
         yCoord = function(d){ return y(d[yAttrName]); };
 
     // x.domain(d3.extent(data, xAccessor));
-    x.domain([1913, 2013]);
+    x.domain([1913, 2015]);
     y.domain([0, d3.max(data, yAccessor)]).nice();
 
 
