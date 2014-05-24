@@ -198,13 +198,10 @@ LOGGING = {
 }
 
 if DEBUG:
-    TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
     # extra apps used for development
     INSTALLED_APPS += [
         'django_extensions',
         'debug_toolbar',
-        'django_nose',
     ]
 
 

@@ -5,9 +5,7 @@ boto==2.23.0
 https://github.com/crccheck/geopy/tarball/add-goog-components
 django-debug-toolbar>=0.9
 django-extensions>=0.9
-django-nose
 factory-boy
 ipdb
-ipdbplugin
 ipython
 Werkzeug>=0.8.3
