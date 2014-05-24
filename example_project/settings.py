@@ -169,11 +169,6 @@ LOGGING = {
         },
     },
     'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        },
         'console': {
             'level': 'DEBUG',
             'class': 'project_runpy.ColorizingStreamHandler',
@@ -181,18 +176,8 @@ LOGGING = {
     },
     'loggers': {
         'django.db.backends': {
+            'level': 'DEBUG' if env.get('SQL') else 'INFO',
             'filters': ['require_debug_true', 'readable_sql'],
-        },
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-        # Silence nose a bit
-        'nose': {
-            'level': 'WARNING',
-            'handlers': ['console'],
-            'propagate': True,
         },
     }
 }
