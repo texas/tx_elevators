@@ -1,11 +1,13 @@
-# run from root directory
-set +e
+# Instructions:
+#
+# run from project root directory
 
-PROJECT=./example_project
+set +e
+MANAGE="python ./example_project/manage.py"
 PORT=8008
 
 
-DEBUG=0 python $PROJECT/manage.py runserver --nothreading --noreload $PORT &
+DEBUG=0 $MANAGE runserver --nothreading --noreload $PORT &
 pid=$!
 echo "runserver pid: $pid"
 
@@ -15,7 +17,7 @@ trap "kill $pid; echo bye $pid" EXIT
 # give time for the servers to get up
 sleep 1
 
-python $PROJECT/manage.py collectstatic --noinput
+$MANAGE collectstatic --noinput
 
 mkdir -p site
 cd site && wget -r localhost:$PORT --force-html -e robots=off -nH -nv --max-redirect 0
