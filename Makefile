@@ -6,7 +6,8 @@ help:
 	@echo "  make help    - this help"
 	@echo "  make test    - run test suite"
 	@echo "  make resetdb - drop and recreate the database"
-	@echo "  make scrape  - get data"
+	@echo "  make scrape  - get data and import"
+	@echo "  make import  - import data"
 	@echo "  make site    - spider $(SITE_URL) and save pages locally"
 	@echo "  make upload  - sync spidered pages to S3"
 	@echo "  make serve   - serve the spided pages locally (on port 8088)"
@@ -26,6 +27,10 @@ resetdb:
 
 scrape:
 	cd data && $(MAKE) $(MFLAGS) clean elevator_data_file.csv
+	python tx_elevators/scripts/scrape.py data/elevator_data_file.csv
+
+
+import:
 	python tx_elevators/scripts/scrape.py data/elevator_data_file.csv
 
 
