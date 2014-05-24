@@ -205,7 +205,6 @@ if DEBUG:
         'django_extensions',
         'debug_toolbar',
         'django_nose',
-        'example_project.test_app',
     ]
 
 
