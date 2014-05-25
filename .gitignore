@@ -12,6 +12,7 @@ GoogleV3_cache
 
 # Database Dump
 *.dump
+*.sql
 
 
 # Private files
