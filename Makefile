@@ -74,5 +74,10 @@ build:
 	docker build -t texastribune/elevators .
 
 shell:
-	docker run --rm --name debug -i -t --link pgplus:postgis \
+	docker run --rm --name elevators -i -t --link pgplus:postgis \
 	  --env-file env-docker texastribune/elevators /bin/bash
+
+gunicorn:
+	docker run --rm --name elevators --link pgplus:postgis \
+	  --env-file env-docker -p 8000:8000 texastribune/elevators \
+	  gunicorn example_project.wsgi --bind 0.0.0.0:8000 --log-file -
