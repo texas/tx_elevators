@@ -25,6 +25,11 @@ resetdb:
 	python $(PROJECT)/manage.py syncdb --noinput
 
 
+dumpdb:
+# Backup the local database
+	docker run --rm --link pgplus:postgis -t crccheck/postgis \
+	  pg_dump -U docker -h postgis -p 5432 -Fc elevators > tx_elevators-$$(date +"%Y-%m-%d").dump
+
 scrape:
 	cd data && $(MAKE) $(MFLAGS) clean elevator_data_file.csv
 	python tx_elevators/scripts/scrape.py data/elevator_data_file.csv

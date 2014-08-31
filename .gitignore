@@ -10,7 +10,7 @@ data/*.orig
 GoogleV3_cache
 
 
-# Database Dump
+# Database Dumps
 *.dump
 *.sql
 
