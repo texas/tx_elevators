@@ -75,15 +75,16 @@ build:
 
 shell:
 	docker run --rm --name elevators -i -t --link pgplus:postgis \
-	  --env-file env-docker texastribune/elevators /bin/bash
+	  --volumes-from elevators-wsgi \
+	  --env-file env-docker --entrypoint /bin/bash texastribune/elevators
 
 gunicorn:
 	docker run --detach --name elevators-wsgi --link pgplus:postgis \
-	  --env-file env-docker -p 8000:8000 texastribune/elevators \
-	  gunicorn example_project.wsgi --bind 0.0.0.0:8000 --log-file -
+	  --env-file env-docker -p 8000:8000 texastribune/elevators
 
 # download script doesn't need concurrency so only use -c 1
 benchmark: gunicorn
+	sleep 5
 	docker run --rm --link elevators-wsgi:wsgi -t \
 	  zz ab -n 10 http://wsgi:8000/
 	docker logs elevators-wsgi

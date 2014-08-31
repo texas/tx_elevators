@@ -4,3 +4,4 @@
 .git
 data/*
 site/*
+static_root
