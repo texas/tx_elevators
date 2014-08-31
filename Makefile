@@ -68,3 +68,11 @@ serve:
 
 
 .PHONY: help test resetdb scrape pushdb site upload serve
+
+# DOCKER #
+build:
+	docker build -t texastribune/elevators .
+
+shell:
+	docker run --rm --name debug -i -t --link pgplus:postgis \
+	  --env-file env-docker texastribune/elevators /bin/bash

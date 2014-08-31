@@ -17,6 +17,7 @@ GoogleV3_cache
 
 # Private files
 .env
+env-*
 example_project/local_settings.py
 
 

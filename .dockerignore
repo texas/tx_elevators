@@ -1,0 +1,6 @@
+*.dump
+*.sql
+*_cache
+.git
+data/*
+site/*
