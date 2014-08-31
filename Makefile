@@ -1,4 +1,5 @@
 PROJECT=./example_project
+MANAGE=python $(PROJECT)/manage.py
 SITE_URL=localhost:8000
 
 help:
@@ -14,15 +15,12 @@ help:
 
 
 test:
-#
-#   -s    don't capture stdout
-#
-	python $(PROJECT)/manage.py test -s
+	$(MANAGE) test tx_elevators
 
 
 resetdb:
-	python $(PROJECT)/manage.py reset_db --router=default --noinput
-	python $(PROJECT)/manage.py syncdb --noinput
+	$(MANAGE) reset_db --router=default --noinput
+	$(MANAGE) syncdb --noinput
 
 
 dumpdb:
@@ -33,6 +31,7 @@ dumpdb:
 scrape:
 	cd data && $(MAKE) $(MFLAGS) clean elevator_data_file.csv
 	python tx_elevators/scripts/scrape.py data/elevator_data_file.csv
+	@echo "should geocode the top 1000 too: $(MANAGE) geocode"
 
 
 import:
@@ -62,7 +61,7 @@ site:
 # user	1m29.810s
 # sys	1m51.935s
 upload:
-	LOGGING=WARN DEBUG=0 python $(PROJECT)/manage.py sync_s3 --dir site --gzip
+	LOGGING=WARN DEBUG=0 $(MANAGE) sync_s3 --dir site --gzip
 
 serve:
 	cd site && python -m SimpleHTTPServer 8088
