@@ -78,6 +78,13 @@ shell:
 	  --env-file env-docker texastribune/elevators /bin/bash
 
 gunicorn:
-	docker run --rm --name elevators --link pgplus:postgis \
+	docker run --detach --name elevators-wsgi --link pgplus:postgis \
 	  --env-file env-docker -p 8000:8000 texastribune/elevators \
 	  gunicorn example_project.wsgi --bind 0.0.0.0:8000 --log-file -
+
+# download script doesn't need concurrency so only use -c 1
+benchmark: gunicorn
+	docker run --rm --link elevators-wsgi:wsgi -t \
+	  zz ab -n 10 http://wsgi:8000/
+	docker logs elevators-wsgi
+	docker rm -f elevators-wsgi
