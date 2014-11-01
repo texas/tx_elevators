@@ -11,5 +11,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         from tx_elevators.models import Building
 
-        for x in Building.objects.filter(latitude__isnull=False):
+        for x in Building.objects.filter(latitude__isnull=False).order_by('elbi'):
             print('{elbi},{latitude},{longitude}'.format(**x.__dict__))

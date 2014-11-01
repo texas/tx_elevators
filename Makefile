@@ -33,6 +33,14 @@ dumpdb:
 	docker run --rm --link postgis:postgis -t crccheck/postgis \
 	  pg_dump -U docker -h postgis -p 5432 -Fc elevators > tx_elevators-$$(date +"%Y-%m-%d").dump
 
+# Dump building geocodes
+#
+# Note that `geocode` will still re-lookup bad addresses
+#
+# To restore: `django loadgeo data/geocoding.csv`
+dumpgeo:
+	$(MANAGE) dumpgeo > data/geocoding.csv
+
 scrape:
 	cd data && $(MAKE) $(MFLAGS) clean elevator_data_file.csv
 	python tx_elevators/scripts/scrape.py data/elevator_data_file.csv
