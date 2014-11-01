@@ -31,8 +31,12 @@ class Building(models.Model):
     # CNAME1
     contact = models.CharField(max_length=100)
 
-    latitude = models.FloatField(null=True)
-    longitude = models.FloatField(null=True)
+    # not using postgis for sqlite compatibility
+    # google geocoder returns up to 7 decimals (1.11 cm precision)
+    latitude = models.DecimalField(max_digits=10, decimal_places=7,
+        null=True, blank=True)
+    longitude = models.DecimalField(max_digits=10, decimal_places=7,
+        null=True, blank=True)
 
     def __unicode__(self):
         return u"{0.name_1} in {0.city}".format(self)
