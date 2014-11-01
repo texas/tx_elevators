@@ -15,11 +15,11 @@ class Building(models.Model):
     # BNAME1
     name_1 = models.CharField(max_length=100)
     # BNAME2
-    name_2 = models.CharField(max_length=100)
+    name_2 = models.CharField(max_length=100, blank=True)
     # BADDR1
     address_1 = models.CharField(max_length=100)
     # BADDR2
-    address_2 = models.CharField(max_length=100)
+    address_2 = models.CharField(max_length=100, blank=True)
     # BCITY
     city = models.CharField(max_length=50)
     # BZIP
