@@ -25,7 +25,7 @@ resetdb:
 
 dumpdb:
 # Backup the local database
-	docker run --rm --link pgplus:postgis -t crccheck/postgis \
+	docker run --rm --link postgis:postgis -t crccheck/postgis \
 	  pg_dump -U docker -h postgis -p 5432 -Fc elevators > tx_elevators-$$(date +"%Y-%m-%d").dump
 
 scrape:
