@@ -128,17 +128,11 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = [
-    # 'django.contrib.auth',
     'django.contrib.contenttypes',
-    # 'django.contrib.sessions',
     # 'django.contrib.sites',
     # 'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
 
     'tx_elevators',
 ]
@@ -187,6 +181,15 @@ if DEBUG:
     INSTALLED_APPS += [
         'django_extensions',
         'debug_toolbar',
+
+        'django.contrib.sessions',
+        'django.contrib.auth',
+        'django.contrib.admin',
+    ]
+
+    MIDDLEWARE_CLASSES += [
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
     ]
 
 

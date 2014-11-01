@@ -10,12 +10,6 @@ urlpatterns = patterns('',
     url(r'^', include('tx_elevators.urls',
         namespace='tx_elevators', app_name='tx_elevators')),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
-
     # Go ahead and serve static media
     url(r'^static/(?P<path>.*)$', serve, {
         'document_root': settings.STATIC_ROOT,
@@ -32,6 +26,8 @@ if settings.DEBUG:
         return HttpResponse(image_data, mimetype="image/x-icon")
 
     urlpatterns += patterns('',
+        url(r'^admin/', include(admin.site.urls)),
+
         url(r'^media/(?P<path>.*)$', serve, {
             'document_root': settings.MEDIA_ROOT,
         }),
