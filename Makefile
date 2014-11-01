@@ -64,6 +64,9 @@ dbpush:
 # Total wall clock time: 43m 29s
 # Downloaded: 24343 files, 92M in 5.3s (17.3 MB/s)
 #
+# FINISHED --2014-11-01 16:38:55--
+# Total wall clock time: 9m 4s
+# Downloaded: 25615 files, 120M in 0.8s (150 MB/s)
 site:
 	bin/download_site.sh
 
