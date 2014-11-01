@@ -1,5 +1,6 @@
 import json
 
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Max, Sum
 from django.http import HttpResponse
 from django.views.generic import TemplateView
@@ -14,7 +15,8 @@ class BaseChart(TemplateView):
     def get(self, request, **kwargs):
         if kwargs.get('data'):
             data = self.get_data(request, **kwargs)
-            content = json.dumps(data)
+            encoder = DjangoJSONEncoder()
+            content = encoder.encode(data)
             return HttpResponse(content, content_type='application/json')
         else:
             return super(BaseChart, self).get(request, **kwargs)
