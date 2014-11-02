@@ -72,10 +72,11 @@ site:
 
 # 24340 files uploaded.
 # 3 files skipped.
-#
 # real	200m23.933s
-# user	1m29.810s
-# sys	1m51.935s
+
+# 25611 files uploaded.
+# 2662 files skipped.
+# real	122m28.098s
 upload:
 	LOGGING=WARN DEBUG=0 $(MANAGE) sync_s3 --dir site --gzip
 
