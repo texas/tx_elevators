@@ -309,6 +309,9 @@ class Command(BaseCommand):
                     headers['Content-Encoding'] = 'gzip'
                     if self.verbosity > 1:
                         print("\tgzipped: %dk to %dk" % (file_size / 1024, len(filedata) / 1024))
+
+            # XXX always set 1 month cache control
+            headers['Cache-Control'] = 'max-age %d' % (3600 * 24 * 30)
             if self.do_expires:
                 # HTTP/1.0
                 headers['Expires'] = '%s GMT' % (email.Utils.formatdate(time.mktime((datetime.datetime.now() + datetime.timedelta(days=365 * 2)).timetuple())))

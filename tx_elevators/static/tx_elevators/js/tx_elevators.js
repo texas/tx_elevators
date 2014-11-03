@@ -187,6 +187,11 @@
   var _data;
 
   var storeData = function(data){
+    // modify data in place to convert lat/lng into numbers
+    $.each(data, function (idx, x) {
+      x.latitude = parseFloat(x.latitude);
+      x.longitude = parseFloat(x.longitude);
+    });
     _data = data;
   };
 
@@ -311,10 +316,7 @@
     var data = $('#building-data').data('building');
     if (data && data.latitude){
       gotPosition({
-          coords:{
-            latitude: data.latitude,
-            longitude: data.longitude
-          }
+          coords: data
       });
     // } else {
       // navigator.geolocation.getCurrentPosition(gotPosition);

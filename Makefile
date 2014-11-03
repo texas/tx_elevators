@@ -23,10 +23,23 @@ resetdb:
 	$(MANAGE) syncdb --noinput
 
 
-dumpdb:
 # Backup the local database
-	docker run --rm --link pgplus:postgis -t crccheck/postgis \
+#
+# To restore
+#   cat tx_elevators-2014-08-31.dump | \
+#   docker run --rm --link postgis:postgis -t crccheck/postgis \
+#   pg_restore -U docker -h postgis --dbname elevators
+dumpdb:
+	docker run --rm --link postgis:postgis -t crccheck/postgis \
 	  pg_dump -U docker -h postgis -p 5432 -Fc elevators > tx_elevators-$$(date +"%Y-%m-%d").dump
+
+# Dump building geocodes
+#
+# Note that `geocode` will still re-lookup bad addresses
+#
+# To restore: `django loadgeo data/geocoding.csv`
+dumpgeo:
+	$(MANAGE) dumpgeo > data/geocoding.csv
 
 scrape:
 	cd data && $(MAKE) $(MFLAGS) clean elevator_data_file.csv
@@ -51,20 +64,32 @@ dbpush:
 # Total wall clock time: 43m 29s
 # Downloaded: 24343 files, 92M in 5.3s (17.3 MB/s)
 #
+# FINISHED --2014-11-01 16:38:55--
+# Total wall clock time: 9m 4s
+# Downloaded: 25615 files, 120M in 0.8s (150 MB/s)
 site:
 	bin/download_site.sh
 
+serve:
+	cd site && python -m SimpleHTTPServer 8088
+
 # 24340 files uploaded.
 # 3 files skipped.
-#
 # real	200m23.933s
-# user	1m29.810s
-# sys	1m51.935s
+
+# 25611 files uploaded.
+# 2662 files skipped.
+# real	122m28.098s
 upload:
 	LOGGING=WARN DEBUG=0 $(MANAGE) sync_s3 --dir site --gzip
 
-serve:
-	cd site && python -m SimpleHTTPServer 8088
+# requires installing https://github.com/twpayne/s3-parallel-put
+# uses 8 threads by default
+#
+# INFO:s3-parallel-put[statter-12800]:put 137686194 bytes in 28270 files in 697.4 seconds (197436 bytes/s, 40.5 files/s)
+upload2:
+	cd site && s3-parallel-put --bucket=${AWS_BUCKET_NAME} \
+	  --grant public-read --header "Cache-Control:max-age=2592000" --gzip  .
 
 
 .PHONY: help test resetdb scrape pushdb site upload serve
