@@ -1,5 +1,3 @@
-import json
-
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Max, Sum
 from django.http import HttpResponse
@@ -29,7 +27,7 @@ class ElevatorList(BaseChart):
         queryset = Elevator.objects.filter(
             floors__gt=0,
             year_installed__gte=1913,
-            year_installed__lte=2014,
+            year_installed__lte=2015,
         ).select_related('building')
         queryset = queryset.exclude(equipment_type__in=[
             'ESCALATOR',
