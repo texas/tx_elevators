@@ -111,7 +111,8 @@ def post_process():
     # Elevator.objects.filter(year_installed__gt=2013).update(year_installed=None)
 
 if __name__ == "__main__":
-    logger = logging.getLogger(__name__)
+    import django; django.setup()  # NOQA
+    logger = logging.getLogger('tx_elevators.scrape')
     path = sys.argv[1]
     process(path)
     post_process()
