@@ -14,6 +14,7 @@ help:
 	@echo "  make serve   - serve the spided pages locally (on port 8088)"
 
 
+# TODO actually write some tests
 test:
 	$(MANAGE) test tx_elevators
 

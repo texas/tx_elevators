@@ -180,7 +180,6 @@ if DEBUG:
     # extra apps used for development
     INSTALLED_APPS += [
         'django_extensions',
-        'debug_toolbar',
 
         'django.contrib.sessions',
         'django.contrib.auth',
