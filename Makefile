@@ -78,21 +78,11 @@ site:
 serve:
 	cd site && python -m SimpleHTTPServer 8088
 
-# 24340 files uploaded.
-# 3 files skipped.
-# real	200m23.933s
-
-# 25611 files uploaded.
-# 2662 files skipped.
-# real	122m28.098s
-upload:
-	LOGGING=WARN DEBUG=0 $(MANAGE) sync_s3 --dir site --gzip
-
 # requires installing https://github.com/twpayne/s3-parallel-put
 # uses 8 threads by default
 #
 # INFO:s3-parallel-put[statter-12800]:put 137686194 bytes in 28270 files in 697.4 seconds (197436 bytes/s, 40.5 files/s)
-upload2:
+upload:
 	cd site && s3-parallel-put --bucket=${AWS_BUCKET_NAME} \
 	  --grant public-read --header "Cache-Control:max-age=2592000" --gzip  .
 
