@@ -192,6 +192,8 @@ if DEBUG:
         'django.contrib.messages.middleware.MessageMiddleware',
     ]
 
+# STFU DJANGO, STOP COMPLAINING
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 try:
     from .local_settings import *
