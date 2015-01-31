@@ -130,6 +130,8 @@ class Elevator(models.Model):
     # DT_EXPIRY
     next_inspection = models.DateField(
         u'Date of Next Inspection',
+        # may be null for time traveling future elevators
+        null=True,
     )
     # ELV_5YEAR
     last_5year = models.DateField(

@@ -48,7 +48,7 @@ scrape:
 
 
 import:
-	python tx_elevators/scripts/scrape.py data/elevator_data_file.csv
+	time python tx_elevators/scripts/scrape.py data/elevator_data_file.csv
 
 
 dbpush:
