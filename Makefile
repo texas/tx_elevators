@@ -83,8 +83,8 @@ serve:
 #
 # INFO:s3-parallel-put[statter-12800]:put 137686194 bytes in 28270 files in 697.4 seconds (197436 bytes/s, 40.5 files/s)
 upload:
-	cd site && s3-parallel-put --bucket=${AWS_BUCKET_NAME} \
-	  --grant public-read --header "Cache-Control:max-age=2592000" --gzip  .
+	cd site && s3-parallel-put --quiet --bucket=${AWS_BUCKET_NAME} \
+	  --grant public-read --header "Cache-Control:max-age=2592000" --gzip .
 
 
 .PHONY: help test resetdb scrape pushdb site upload serve
