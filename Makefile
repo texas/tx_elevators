@@ -21,7 +21,7 @@ test:
 
 resetdb:
 	$(MANAGE) reset_db --router=default --noinput
-	$(MANAGE) syncdb --noinput
+	$(MANAGE) migrate --noinput
 
 
 # Backup the local database
