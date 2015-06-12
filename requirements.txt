@@ -1,4 +1,4 @@
-Django==1.7.4
+Django==1.8.2
 
 dj-database-url==0.3.0
 project_runpy
