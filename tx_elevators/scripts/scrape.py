@@ -10,6 +10,7 @@ import logging
 import sys
 
 from tx_elevators.models import Building, Elevator
+from tqdm import tqdm
 
 
 def setfield(obj, fieldname, value):
@@ -92,9 +93,10 @@ def process_row(row):
 def process(path):
     with open(path, 'rU') as f:
         reader = csv.DictReader(f)
-        for i, row in enumerate(reader):
-            if not i % 1000:
-                logger.info("Processing Row %s" % i)
+        for total, row in enumerate(f):  # subtract 1 for header row
+            pass
+        f.seek(0)
+        for row in tqdm(reader, total=total, leave=True):
             try:
                 process_row(format_row(row))
             except Exception as e:
@@ -102,6 +104,7 @@ def process(path):
                 import ipdb
                 ipdb.set_trace()
                 raise
+        print('')
 
 
 def post_process():
