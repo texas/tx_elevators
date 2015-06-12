@@ -6,7 +6,7 @@ Dev Setup
 
 Installing Requirements:
 
-    pip install -r requirements-dev.txt
+    pip install -r requirements.txt
 
 
 Using Postgresql instead of Sqlite as your database:
