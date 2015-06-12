@@ -48,10 +48,8 @@ scrape:
 	@echo "should geocode the top 1000 too: $(MANAGE) geocode"
 
 
-# timing for a trivial import
-# real	1m51.994s
-# user	1m24.935s
-# sys	0m4.226s
+# timing for trivial import real	1m51.994s
+# timing for a fresh import real	4m15.279s
 import:
 	python tx_elevators/scripts/scrape.py data/elevator_data_file.csv
 
