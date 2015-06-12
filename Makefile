@@ -27,12 +27,12 @@ resetdb:
 # Backup the local database
 #
 # To restore
-#   cat tx_elevators-2014-08-31.dump | \
-#   docker run --rm --link postgis:postgis -t crccheck/postgis \
-#   pg_restore -U docker -h postgis --dbname elevators
+#   cat tx_elevators-2014-11-01.dump | \
+#     docker run --rm --link elevators_1:db -t crccheck/postgis \
+#     pg_restore -U docker -h db --dbname elevators
 dumpdb:
-	docker run --rm --link postgis:postgis -t crccheck/postgis \
-	  pg_dump -U docker -h postgis -p 5432 -Fc elevators > tx_elevators-$$(date +"%Y-%m-%d").dump
+	docker run --rm --link elevators_1:db -t crccheck/postgis \
+	  pg_dump -U docker -h db -Fc elevators > tx_elevators-$$(date +"%Y-%m-%d").dump
 
 # Dump building geocodes
 #
