@@ -14,6 +14,9 @@ from tx_elevators.models import Building, Elevator
 from tqdm import tqdm
 
 
+logger = logging.getLogger('tx_elevators.scrape')
+
+
 def format_row(row):
     # trim white space
     for key, value in row.items():
@@ -83,7 +86,6 @@ def post_process():
 
 if __name__ == "__main__":
     import django; django.setup()  # NOQA
-    logger = logging.getLogger('tx_elevators.scrape')
     path = sys.argv[1]
     process(path)
     post_process()

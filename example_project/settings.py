@@ -146,9 +146,8 @@ INSTALLED_APPS = [
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    # Log everything
     'root': {
-        'level': env.get('LOGGING', 'DEBUG'),
+        'level': env.get('LOGGING', 'WARNING'),
         'handlers': ['console'],
     },
     'filters': {

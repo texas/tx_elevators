@@ -5,6 +5,7 @@ import csv
 import logging
 
 from django.core.management.base import BaseCommand
+from tqdm import tqdm
 
 
 class Command(BaseCommand):
@@ -17,8 +18,11 @@ class Command(BaseCommand):
         logger = logging.getLogger(__name__)
 
         with open(path) as csvfile:
+            for total, row in enumerate(csvfile, start=1):
+                pass
+            csvfile.seek(0)
             reader = csv.reader(csvfile)
-            for row in reader:
+            for row in tqdm(reader, total=total, leave=True):
                 elbi, latitude, longitude = row
                 building = Building.objects.filter(elbi=elbi).update(
                     latitude=latitude,
