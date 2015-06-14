@@ -102,7 +102,7 @@ class ElevatorManager(models.Manager):
         """
         The queryset that should be used inside the building_detail template.
         """
-        return self.get_query_set().order_by(
+        return self.get_queryset().order_by(
             '-floors',
             '-equipment_type',
             'drive_type',
