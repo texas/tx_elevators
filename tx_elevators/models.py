@@ -102,7 +102,7 @@ class ElevatorManager(models.Manager):
         """
         The queryset that should be used inside the building_detail template.
         """
-        return self.get_query_set().order_by(
+        return self.get_queryset().order_by(
             '-floors',
             '-equipment_type',
             'drive_type',
@@ -130,6 +130,8 @@ class Elevator(models.Model):
     # DT_EXPIRY
     next_inspection = models.DateField(
         u'Date of Next Inspection',
+        # may be null for time traveling future elevators
+        null=True,
     )
     # ELV_5YEAR
     last_5year = models.DateField(

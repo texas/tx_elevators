@@ -9,32 +9,12 @@ import csv
 import logging
 import sys
 
+from obj_update import obj_update_or_create
 from tx_elevators.models import Building, Elevator
+from tqdm import tqdm
 
 
-def setfield(obj, fieldname, value):
-    """Fancy setattr with debugging."""
-    old = getattr(obj, fieldname)
-    if str(old) != str(value):
-        setattr(obj, fieldname, value)
-        if not hasattr(obj, '_is_dirty'):
-            obj._is_dirty = []
-        obj._is_dirty.append("%s %s->%s" % (fieldname, old, value))
-
-
-def update(obj, data):
-    """
-    Fancy way to update `obj` with `data` dict.
-
-    Returns True if data changed and  was saved.
-    """
-    for key, value in data.items():
-        setfield(obj, key, value)
-    if getattr(obj, '_is_dirty', None):
-        logger.debug(obj._is_dirty)
-        obj.save()
-        del obj._is_dirty
-        return True
+logger = logging.getLogger('tx_elevators.scrape')
 
 
 def format_row(row):
@@ -63,12 +43,8 @@ def process_row(row):
         owner=row['ONAME1'],
         contact=row['CNAME1'],
     )
-    building, created = Building.objects.get_or_create(
-        elbi=row['LICNO'],
-        defaults=default_data,
-    )
-    if not created:
-        update(building, default_data)
+    building, __ = obj_update_or_create(
+        Building, elbi=row['LICNO'], defaults=default_data)
 
     default_data = dict(
         tdlr_id=row['IDNO'],
@@ -81,20 +57,17 @@ def process_row(row):
         year_installed=row['YR_INSTALL'],
         building=building
     )
-    elevator, created = Elevator.objects.get_or_create(
-        decal=row['SUB_NO'],
-        defaults=default_data,
-    )
-    if not created:
-        update(elevator, default_data)
+    elevator, __ = obj_update_or_create(
+        Elevator, decal=row['SUB_NO'], defaults=default_data)
 
 
 def process(path):
     with open(path, 'rU') as f:
         reader = csv.DictReader(f)
-        for i, row in enumerate(reader):
-            if not i % 1000:
-                logger.info("Processing Row %s" % i)
+        for total, row in enumerate(f):  # subtract 1 for header row
+            pass
+        f.seek(0)
+        for row in tqdm(reader, total=total, leave=True):
             try:
                 process_row(format_row(row))
             except Exception as e:
@@ -102,6 +75,7 @@ def process(path):
                 import ipdb
                 ipdb.set_trace()
                 raise
+        print('')  # Fix for tqdm leave=True does not print a newline
 
 
 def post_process():
@@ -111,7 +85,7 @@ def post_process():
     # Elevator.objects.filter(year_installed__gt=2013).update(year_installed=None)
 
 if __name__ == "__main__":
-    logger = logging.getLogger(__name__)
+    import django; django.setup()  # NOQA
     path = sys.argv[1]
     process(path)
     post_process()

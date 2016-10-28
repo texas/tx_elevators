@@ -146,9 +146,8 @@ INSTALLED_APPS = [
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    # Log everything
     'root': {
-        'level': env.get('LOGGING', 'DEBUG'),
+        'level': env.get('LOGGING', 'WARNING'),
         'handlers': ['console'],
     },
     'filters': {
@@ -180,7 +179,6 @@ if DEBUG:
     # extra apps used for development
     INSTALLED_APPS += [
         'django_extensions',
-        'debug_toolbar',
 
         'django.contrib.sessions',
         'django.contrib.auth',
@@ -193,6 +191,8 @@ if DEBUG:
         'django.contrib.messages.middleware.MessageMiddleware',
     ]
 
+# STFU DJANGO, STOP COMPLAINING
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 try:
     from .local_settings import *
