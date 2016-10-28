@@ -63,10 +63,7 @@ site: web/start
 serve:
 	cd ._site && python -m SimpleHTTPServer 8088
 
-# requires installing https://github.com/twpayne/s3-parallel-put
-# uses 8 threads by default
-#
-# INFO:s3-parallel-put[statter-12800]:put 137686194 bytes in 28270 files in 697.4 seconds (197436 bytes/s, 40.5 files/s)
 upload:
-	cd ._site && s3-parallel-put --quiet --bucket=${AWS_BUCKET_NAME} \
-	  --grant public-read --header "Cache-Control:max-age=2592000" --gzip .
+	aws s3 sync ._site s3://$(AWS_BUCKET_NAME)/ \
+	  --cache-control "max-age=2592000" \
+	  --acl "public-read"
